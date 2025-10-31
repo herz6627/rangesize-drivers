@@ -1,4 +1,6 @@
 
+### Herzog 2024
+
 big_func <- function(dat, 
                      param = c("bison + spei + n_grasshop + n_grasshop_previous + years_since_last_burn + fri"), 
                      file_name = NULL, 

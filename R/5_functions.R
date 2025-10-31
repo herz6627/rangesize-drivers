@@ -1,5 +1,5 @@
 # extract coefficient names and their estimates for each species
-mod_list_to_df <- function(mod){ 
+mod_list_to_df <- function(mod){ # helper function
   # extract coefficient names and their estimates for each species
   out <- data.frame()
   for (i in 1:length(mod)) {
@@ -17,9 +17,8 @@ mod_list_to_df <- function(mod){
     # print(i)
     out <- bind_rows(out,temp)
   }
-  
+  # out <- as.data.frame(out[-1,]) # drop first row of missing values
   out[,'species'] <- names(mod) # add column with species names
-  
   return(out)
 }
 
@@ -65,13 +64,27 @@ mod_test <- function(dat, include_interaction = F, include_lifespan = T, plot.ti
     if(include_weights == T) mod <- lm(as.formula(form), data = temp, na.action = "na.fail", weights = n)
     if(include_weights == F) mod <- lm(as.formula(form), data = temp, na.action = "na.fail")
 
-
+    # if(include_weights == T & transform_coeffs == F) mod <- lm(as.formula(form), data = temp, na.action = "na.fail", weights = n)
+    # if(include_weights == F & transform_coeffs == F) mod <- lm(as.formula(form), data = temp, na.action = "na.fail")
+    # 
+    # if(include_weights == T & transform_coeffs == T) mod <- glmmTMB::glmmTMB(as.formula(form), family = ziGamma, data = temp, na.action = "na.fail", weights = n)
+    # if(include_weights == F & transform_coeffs == T) mod <- glmmTMB::glmmTMB(as.formula(form), family = ziGamma, data = temp, na.action = "na.fail")
+    #
+    # residuals
+    # simulationOutput <- DHARMa::simulateResiduals(fittedModel = mod, plot = F)
+    # plot(simulationOutput, title = paste0(plot.title, " ", colnames(temp)[1]))
+    # hist(simulationOutput)
+    
+    # plot(mod, which = 1)
+    # title(main = paste0(plot.title, " ", colnames(temp)[1]))
+    
     # histogram of residuals
     print(
       ggplot(data = temp, aes(x = mod$residuals)) +
       geom_histogram(fill = 'steelblue', color = 'black') +
       labs(title = paste('Histogram of Residuals\n', plot.title, " ", colnames(temp)[1]), x = 'Residuals', y = 'Frequency')
     )
+    
     
     # save output
     temp_name = names(temp)[1] # name object in list as driver
@@ -90,6 +103,8 @@ mod_test <- function(dat, include_interaction = F, include_lifespan = T, plot.ti
              var = temp_name) # driver name column
     names(out3)[col] <- temp_name
     
+    
+
   }
   out <- list(out1, out2, out3
               )
@@ -99,31 +114,26 @@ mod_test <- function(dat, include_interaction = F, include_lifespan = T, plot.ti
 
 # extract which models have range as a significant predictor for drivers
 get_sig_coeffs <- function(col_test_results, cc_test_results, ext_test_results){
-  
   # which models have range size as a predictor?
   out <- list()
-  
   # colonization
   temp <- unlist(col_test_results['coef_dredge'])
   names(temp) <- str_remove(names(temp), "coef_dredge.") # remove extra strings
   temp <- temp[str_detect(names(temp), "(?<!:)range_size(?!:)")] # keep only those with range size coefficient # when log transformed: "(?<!:)log\\(range_size\\)(?!:)"
   names(temp) <- gsub("\\.range_size", "", names(temp)) # clean names to only include driver
   col_range_coeff_abs <- temp
-  
   # cc change
   temp <- unlist(cc_test_results['coef_dredge'])
   names(temp) <- str_remove(names(temp), "coef_dredge.") # remove extra strings
   temp <- temp[str_detect(names(temp), "(?<!:)range_size(?!:)")] # keep only those with range size coefficient
   names(temp) <- gsub("\\.range_size", "", names(temp)) # clean names to only include driver
   cc_range_coeff_abs <- temp
-  
   # extinction
   temp <- unlist(ext_test_results['coef_dredge'])
   names(temp) <- str_remove(names(temp), "coef_dredge.") # remove extra strings
   temp <- temp[str_detect(names(temp), "(?<!:)range_size(?!:)")] # keep only those with range size coefficient, no interaction (searches for ':' and drops log(range_size) if present)
   names(temp) <- gsub("\\.range_size", "", names(temp)) # clean names to only include driver
   ext_range_coeff_abs <- temp
-  
   # range_size coefficient values for the given driver models
   out[["col"]] <- col_range_coeff_abs
   out[["cc"]] <- cc_range_coeff_abs
@@ -144,7 +154,7 @@ plot_coefficients <- function(
 ) {
   coeff_type <- match.arg(coeff_type)
   
-  # standardize variable names
+  # Map variable names
   temp <- dat %>%
     mutate(var = case_when(
       var == 'bison1' ~ "Bison",
@@ -156,43 +166,52 @@ plot_coefficients <- function(
       var == "bison1:n_grasshop" ~ "Bison:GH",
       var == 'bison1_mod' ~ "Bison_mod",
       var == 'n_grasshop_mod' ~ "GH_mod"
-    )) %>% 
+    ),
+    var = fct_relevel(var,c("Climate", "Time~since~fire", "Burn~interval", "Bison", "Grasshopper", "Grasshopper[t-1]", "Bison:GH", "Bison_mod", "GH_mod"))) %>% 
     {if (filterXL) filter(., range_size < 2) else .}
-  
-  dat_text <- data.frame(
-    label = c("A", "B", "C"),
-    mod   = c("colonization", "midpoint_change", "extinction")
-  )
+  # 
+  # dat_text <- data.frame(
+  #   label = c("A", "B", "C"),
+  #   mod   = c("colonization", "midpoint_change", "extinction")
+  # )
   
   # Select variables based on coeff_type
   vars_to_plot <- switch(
     coeff_type,
     all = unique(temp$var),
     primary = c("Burn~interval","Grasshopper[t-1]","Climate","Time~since~fire","Bison","Grasshopper"),
-    secondary = c("Bison_mod","GH_mod","Bison:GH")
+    secondary = c(
+      
+      "Bison_mod","GH_mod","Bison:GH"
+      )
   )
   
-  # filter variables if needed
   temp_plot <- temp %>% filter(var %in% vars_to_plot)
   
-  # plot
   p <- ggplot(temp_plot, aes(x = var, y = val)) +
     geom_hline(yintercept = 0, color = "gray70") +
     geom_jitter(color = "gray", size = 0.4, alpha = 0.9) +
     geom_violin(alpha = 0.6, fill = "gray") +
     labs(x = "Driver", y = "Effect size") +
-    scale_x_discrete("Driver", labels = parse(text = sort(unique(temp_plot$var)))) +
+    scale_x_discrete("Driver", labels = parse(text = as.character(sort(unique(temp_plot$var))))) +
     theme(
       legend.position = "none",
       axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, lineheight = 0.5)
     ) +
     facet_wrap(~factor(mod, levels = c("colonization", "midpoint_change", "extinction"),
-                       labels = c("Colonization", "Change in cover", "Extirpation"))) +
-    geom_text(
-      data = dat_text,
-      mapping = aes(x = Inf, y = Inf, label = label),
-      hjust = 2, vjust = 2, label.size = 0.5, fontface = "bold"
-    )
+                       labels = c("Colonization", "Change in cover", "Extirpation"))) 
+    # label on right
+    # geom_text(
+    #   data = dat_text,
+    #   mapping = aes(x = Inf, y = Inf, label = label),
+    #   hjust = 2, vjust = 2, label.size = 0.5, fontface = "bold"
+    # )
+    # label on left
+    # geom_text(
+    #   data = dat_text,
+    #   mapping = aes(x = -Inf, y = Inf, label = label),
+    #   hjust = -0.5, vjust = 2, label.size = 0.5, fontface = "bold"
+    # )
   
   return(p)
 }
@@ -236,7 +255,9 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
     mutate(
       range_coeff = round(range_coeff, 2),
       label = as.character(range_coeff),
-      var = recode(var, !!!var_lookup)
+      var = recode(var, !!!var_lookup),
+      var = fct_relevel(var,c("Climate", "Time~since~fire", "Burn~interval", "Bison", "Grasshopper", "Grasshopper[t-1]", "Bison:GH", "Bison_mod", "GH_mod"))
+      
     )
   
   # Helper to apply filters and recode
@@ -251,6 +272,7 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
       mutate(
         mod = recode(mod, !!!mod_lookup), # !!! unpacks the named vector so each named element becomes its own argument for recode()
         var = recode(var, !!!var_lookup),
+        var = fct_relevel(var,c("Climate", "Time~since~fire", "Burn~interval", "Bison", "Grasshopper", "Grasshopper[t-1]", "Bison:GH", "Bison_mod", "GH_mod")),
         sig = mapply(
           function(m, v) v %in% f_labels$var[f_labels$mod == m],
           mod, var
@@ -262,22 +284,22 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
     mutate(var = fct_drop(var)) # drop any extra factor levels (i.e. (Intercept))
   temp_pred_df <- prepare_df(pred_df)
   
-  # Panel annotation
+  # Panel annotation setup
   LETTERS702 <- c(LETTERS, sapply(LETTERS, function(x) paste0(x, LETTERS)))
   dat_text <- data.frame(
     label = LETTERS702[1:(3*length(unique(temp_dat$var)))],
     mod   = rep(mod_lookup, times = length(unique(temp_dat$var))),
-    var   = rep(sort(levels(temp_dat$var)), each = 3)
+    var   = rep(levels(temp_dat$var), each = 3)
   )
   
   # Plot
   p <- ggplot(temp_dat, aes(x = range_size, y = val)) +
     geom_hline(yintercept = 0, color = "gray80") +
     geom_point(color = "darkgray", alpha = 0.75) +
-    geom_line(data = filter(temp_pred_df, lifespan == "p"),
+    geom_line(data = filter(temp_pred_df, lifespan == "p"), # only plotting line for perennial species. This factor has been acounted for in our models
               aes(y = pred, color = sig), linewidth = 1) +
     scale_color_manual(values = c("TRUE" = "darkslateblue"), na.value = NA, guide = "none") +
-    facet_grid(var ~ factor(mod, levels = mod_lookup),
+    facet_grid(factor(var, levels = levels(temp_dat$var)) ~ factor(mod, levels = mod_lookup), # have to force the facet order
                labeller = label_parsed) +
     geom_text(data = f_labels, aes(x = Inf, y = -Inf, label = label),
               hjust = 1.25, vjust = -0.5) +
@@ -291,5 +313,137 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
   message(paste0("image saved to ", fld))
 }
 
+# OLD
+# make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list, height = 7, width = 4, fld = "./figs/5_mod-results.png", filter.sp = F, filter.sp.vec = NULL, filter.var.vec = NULL, val.transform = T){
+#   
+#   d <- sig_coeffs_list
+#   
+#   # New facet label names for supp variable
+#   f_labels <- bind_rows(mutate(as_tibble(d[[1]], rownames = "var"), # add range coefficients
+#                                mod = "Colonization"),
+#                         mutate(as_tibble(d[[2]], rownames = "var"),
+#                                mod = "Change~'in'~cover"),
+#                         mutate(as_tibble(d[[3]], rownames = "var"),
+#                                mod = "Extirpation")) %>%
+#     filter(!var %in% filter.var.vec) %>%  # remove any unwanted drivers
+#     rename(range_coeff = value) %>%
+#     mutate(
+#       range_coeff = round(range_coeff, 2),
+#       label = paste0(range_coeff),  #"Range coef.:",
+#       var = case_when( # make pretty labels
+#         var == "bison1" ~ "Bison",
+#         var == "fri" ~ "FRI",
+#         var == "n_grasshop" ~ "GH",
+#         var == "n_grasshop_previous" ~ "GH[t-1]",
+#         var == "years_since_last_burn" ~ "TSF",
+#         var == "spei" ~ "SPEI",
+#         var == "bison1.n_grasshop" ~ "Bison:GH",
+#         
+#         var == 'bison1_mod' ~ "Bison_mod",
+#         var == 'n_grasshop_mod' ~ "GH_mod"
+#       ))
+#   
+#   temp_dat <- dat_df %>% 
+#     {if(filter.sp == T) {dplyr::filter(., species %in% filter.sp.vec)} else .} %>% # remove any species if specified
+#     dplyr::filter(!var %in% filter.var.vec) %>% # remove any drivers if specified
+#     mutate(
+#       mod = case_when( # make pretty labels
+#         mod == "colonization" ~ "Colonization",
+#         mod == "midpoint_change" ~ "Change~'in'~cover",
+#         mod == "extinction" ~ "Extirpation"
+#       ),
+#       var = case_when( # make pretty labels
+#         var == "bison1" ~ "Bison",
+#         var == "fri" ~ "FRI",
+#         var == "n_grasshop" ~ "GH",
+#         var == "n_grasshop_previous" ~ "GH[t-1]",
+#         var == "years_since_last_burn" ~ "TSF",
+#         var == "spei" ~ "SPEI",
+#         var == "bison1:n_grasshop" ~ "Bison:GH",
+#         
+#         var == 'bison1_mod' ~ "Bison_mod",
+#         var == 'n_grasshop_mod' ~ "GH_mod"
+#       ),
+#       sig = case_when(mod == 'Colonization' & var %in% filter(f_labels, mod == "Colonization")$var ~ T, # add column to indicate if the driver is significant
+#                       mod == "Change~'in'~cover" & var %in% filter(f_labels, mod == "Change~'in'~cover")$var ~ T,
+#                       mod == 'Extirpation' & var %in% filter(f_labels, mod == "Extirpation")$var ~ T)
+#         
+#     ) 
+#   
+#   temp_pred_df = pred_df %>% 
+#     # {if(filter.sp == T) {dplyr::filter(., species %in% filter.sp.vec)} else .} %>% # remove any species if specified
+#     filter(!var %in% filter.var.vec) %>% # remove any drivers if specified
+#     mutate(
+#       mod = case_when( # make pretty labels
+#         mod == "colonization" ~ "Colonization",
+#         mod == "midpoint_change" ~ "Change~'in'~cover",
+#         mod == "extinction" ~ "Extirpation"
+#       ),
+#       var = case_when( # make pretty labels
+#         var == "bison1" ~ "Bison",
+#         var == "fri" ~ "FRI",
+#         var == "n_grasshop" ~ "GH",
+#         var == "n_grasshop_previous" ~ "GH[t-1]",
+#         var == "years_since_last_burn" ~ "TSF",
+#         var == "spei" ~ "SPEI",
+#         var == "bison1.n_grasshop" ~ "Bison:GH",
+#         
+#         var == 'bison1_mod' ~ "Bison_mod",
+#         var == 'n_grasshop_mod' ~ "GH_mod"
+#       ),
+#       sig = case_when(mod == 'Colonization' & var %in% filter(f_labels, mod == "Colonization")$var ~ T, # add column to indicate if the driver is significant
+#                       mod == "Change~'in'~cover" & var %in% filter(f_labels, mod == "Change~'in'~cover")$var ~ T,
+#                       mod == 'Extirpation' & var %in% filter(f_labels, mod == "Extirpation")$var ~ T)
+#       
+#     ) 
+#     
+#   # add panel annotations
+#   LETTERS702 <- c(LETTERS, sapply(LETTERS, function(x) paste0(x, LETTERS))) # need more than 26 letters sometimes
+#   dat_text <- data.frame( # add panel labels
+#     label = LETTERS702[1:(3*length(unique(temp_dat$var)))],
+#     mod   = c("Colonization", "Change~'in'~cover", "Extirpation"),
+#     var = rep(sort(unique(temp_dat$var)), each=3)
+#   )
+#   
+#   # plot
+#   p <- 
+#     temp_dat %>% 
+#     ggplot(aes(x = range_size, y = val)) +
+#     geom_hline(yintercept = 0, color = "gray80") +
+#     geom_point(color = "darkgray", alpha = 0.75) +
+#     # geom_smooth(method = "lm", aes(color = sig), se = F) +
+#     
+#     geom_line(data = filter(temp_pred_df, lifespan == "p"), aes(y = pred, color = sig), linewidth = 1) + # NOTE: we are only including perennial values for the figures
+#     
+#     
+#     scale_color_manual(values = c("TRUE" = "darkslateblue"), na.value = NA, guide = "none") +
+#     facet_grid(var~factor(mod, levels = c("Colonization", "Change~'in'~cover", "Extirpation")), # for whatever reason when I try to order 'mod' this is the only setup where i can get them in order AND with the pretty names
+#                # scales = "free_y",
+#                labeller = label_parsed) +
+#     geom_text(
+#       data    = f_labels,
+#       # # top left
+#       # mapping = aes(x = -Inf, y = Inf, label = label),
+#       # hjust   = -0.25,
+#       # vjust   = 2
+#       # bottom right
+#       mapping = aes(x = Inf, y = -Inf, label = label),
+#       hjust   = 1.25,
+#       vjust   = -0.5
+#     ) +
+#     labs(x =expression(paste("Range size * ", 10^7, " ", km^2)), y = "Effect size") +
+#     geom_text( # add panel annotations
+#       data    = dat_text,
+#       mapping = aes(x = Inf, y = Inf, label = label),
+#       hjust   = 1.5,
+#       vjust   = 1.5,
+#       label.size = 0.5,
+#       fontface="bold"
+#     )
+#   # save
+#   print(p)
+#   ggsave(fld, height = height, width = width)
+#   # finish
+#   message(paste0("image saved to", fld))
+# }
 
-# END

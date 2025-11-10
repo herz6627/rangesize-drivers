@@ -22,20 +22,33 @@ mod_list_to_df <- function(mod){ # helper function
   return(out)
 }
 
-mod_test <- function(dat, include_interaction = F, include_lifespan = T, plot.title = NULL, include_weights = F, transform_coeffs){ # helper function when including functional groups
+mod_test <- function( # run linear models and model selection
+  dat, # dataset
+  include_interaction = F, # whether to include an interaction between range size and lifespan
+  include_lifespan = T, # if T, includes a lifespan paremeter
+  plot.title = NULL, # plot title for summary output
+  include_weights = F, # if T, weights models by n (number of observations)
+  phylo = NULL # object should be a phylogenetic tree with species names matching dat. if a tree is provided, models will weight by phylogenetic relatedness. Tree will be trimmed to species in dat.
+){ 
   out1 <- list() # list to fill with full dredge output
   out2 <- list() # list to fill with just coefficients from dredge output
   out3 <- list() # list to fill with top model
   
   params <- (ncol(dat)-3) # number of parameters # ! this value (3) includes a column of n (+species+range_size)
   message(paste("detected ", params, " parameters"))
-  if (transform_coeffs == T) {require(glmmTMB)}
+  
+  if (!is.null(phylo)) { # trim tree to only species included in the dataset
+    # prune tree to only the branches in the species list
+    pruned.tree <- drop.tip(tree,tree$tip.label[-match(filter(temp, species %in% col_dat$species)$species_, tree$tip.label)])
+    
+  }
+  
   
   for (col in 2:params) { # iterate over columns (drivers)
     temp <- dat %>% 
       left_join(sp_info) %>% 
       mutate(across(lifespan:photo, as.factor)) %>% 
-      select(all_of(col), range_size, lifespan, growthform, n) %>% 
+      select(all_of(col), range_size, lifespan, growthform, n, species) %>% 
       drop_na()
     
     if (nrow(temp) < 5) {print (paste('less than 5 coefficients found, skipping',  colnames(temp)[1])) ; next}
@@ -47,29 +60,55 @@ mod_test <- function(dat, include_interaction = F, include_lifespan = T, plot.ti
     colnames(temp)[1] <-  sub("\\:", ".", colnames(temp)[1]) # replace ':' for interaction effects
     
     # make model
-    if(include_interaction == F & include_lifespan == T) form <- paste0(names(temp)[1], "~range_size + lifespan") #mod <- lm(as.formula(paste0(names(temp)[1], "~range_size + lifespan")), data = temp, na.action = "na.fail") # + growthform
-    if(include_interaction == T & include_lifespan == T) form <- paste0(names(temp)[1], "~range_size*lifespan") # mod <- lm(as.formula(paste0(names(temp)[1], "~range_size*lifespan")), data = temp, na.action = "na.fail") #*growthform
-    if(include_lifespan == F) {
-       form <- as.formula(paste0(names(temp)[1], "~range_size")) # mod <- lm(as.formula(paste0(names(temp)[1], "~range_size")), data = temp, na.action = "na.fail")
+    # formula
+    if (include_lifespan) {
+      if(include_interaction) {
+        form <- paste0(names(temp)[1], "~range_size*lifespan") 
+      } else {
+        form <- paste0(names(temp)[1], "~range_size + lifespan") 
+      }
+      
+      if (length(unique(temp$lifespan)) < 2) {
+        form <- as.formula(paste0(names(temp)[1], "~range_size"))
+        print("not enough lifespan levels, dropping parameter from model")
+      }
+      
+    } else {
+      form <- as.formula(paste0(names(temp)[1], "~range_size")) 
       print("ignoring 'include_interaction' parameter")
     }
     
-    if (length(unique(temp$lifespan)) < 2 & include_lifespan == T) {
-      form <- as.formula(paste0(names(temp)[1], "~range_size"))
-        print("not enough lifespan levels, dropping parameter from model")
-        
+    
+    # model
+    if (!is.null(phylo)) {
+      
+      temp <- temp %>% 
+        mutate(species = gsub(" ", "_", species)) # species name needs to match phylo tree
+      
+      if(include_weights) {
+        mod <- nlme::gls(as.formula(form),
+                         correlation = ape::corBrownian(phy = phylo, form = ~species),
+                         weights = nlme::varFixed(~I(1/n)), # slightly different format than regular lm model
+                         data = temp,
+                         method = "ML")
+      } else {
+        mod <- nlme::gls(as.formula(form),
+                         correlation = ape::corBrownian(phy = phylo, form = ~species),
+                         data = temp,
+                         method = "ML")
+      }
+      
+    } else{
+      
+      if(include_weights) {
+        mod <- lm(as.formula(form), data = temp, na.action = "na.fail", weights = n)
+      } else {
+        mod <- lm(as.formula(form), data = temp, na.action = "na.fail")
+      }
+      
     }
     
     
-    if(include_weights == T) mod <- lm(as.formula(form), data = temp, na.action = "na.fail", weights = n)
-    if(include_weights == F) mod <- lm(as.formula(form), data = temp, na.action = "na.fail")
-
-    # if(include_weights == T & transform_coeffs == F) mod <- lm(as.formula(form), data = temp, na.action = "na.fail", weights = n)
-    # if(include_weights == F & transform_coeffs == F) mod <- lm(as.formula(form), data = temp, na.action = "na.fail")
-    # 
-    # if(include_weights == T & transform_coeffs == T) mod <- glmmTMB::glmmTMB(as.formula(form), family = ziGamma, data = temp, na.action = "na.fail", weights = n)
-    # if(include_weights == F & transform_coeffs == T) mod <- glmmTMB::glmmTMB(as.formula(form), family = ziGamma, data = temp, na.action = "na.fail")
-    #
     # residuals
     # simulationOutput <- DHARMa::simulateResiduals(fittedModel = mod, plot = F)
     # plot(simulationOutput, title = paste0(plot.title, " ", colnames(temp)[1]))
@@ -81,8 +120,8 @@ mod_test <- function(dat, include_interaction = F, include_lifespan = T, plot.ti
     # histogram of residuals
     print(
       ggplot(data = temp, aes(x = mod$residuals)) +
-      geom_histogram(fill = 'steelblue', color = 'black') +
-      labs(title = paste('Histogram of Residuals\n', plot.title, " ", colnames(temp)[1]), x = 'Residuals', y = 'Frequency')
+        geom_histogram(fill = 'steelblue', color = 'black') +
+        labs(title = paste('Histogram of Residuals\n', plot.title, " ", colnames(temp)[1]), x = 'Residuals', y = 'Frequency')
     )
     
     
@@ -104,10 +143,10 @@ mod_test <- function(dat, include_interaction = F, include_lifespan = T, plot.ti
     names(out3)[col] <- temp_name
     
     
-
+    
   }
   out <- list(out1, out2, out3
-              )
+  )
   names(out) <- c("full_dredge_out", "coef_dredge", "predicted")
   return(out)
 }
@@ -183,7 +222,7 @@ plot_coefficients <- function(
     secondary = c(
       
       "Bison_mod","GH_mod","Bison:GH"
-      )
+    )
   )
   
   temp_plot <- temp %>% filter(var %in% vars_to_plot)
@@ -200,18 +239,18 @@ plot_coefficients <- function(
     ) +
     facet_wrap(~factor(mod, levels = c("colonization", "midpoint_change", "extinction"),
                        labels = c("Colonization", "Change in cover", "Extirpation"))) 
-    # label on right
-    # geom_text(
-    #   data = dat_text,
-    #   mapping = aes(x = Inf, y = Inf, label = label),
-    #   hjust = 2, vjust = 2, label.size = 0.5, fontface = "bold"
-    # )
-    # label on left
-    # geom_text(
-    #   data = dat_text,
-    #   mapping = aes(x = -Inf, y = Inf, label = label),
-    #   hjust = -0.5, vjust = 2, label.size = 0.5, fontface = "bold"
-    # )
+  # label on right
+  # geom_text(
+  #   data = dat_text,
+  #   mapping = aes(x = Inf, y = Inf, label = label),
+  #   hjust = 2, vjust = 2, label.size = 0.5, fontface = "bold"
+  # )
+  # label on left
+  # geom_text(
+  #   data = dat_text,
+  #   mapping = aes(x = -Inf, y = Inf, label = label),
+  #   hjust = -0.5, vjust = 2, label.size = 0.5, fontface = "bold"
+  # )
   
   return(p)
 }
@@ -230,7 +269,6 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
     fri = "Burn~interval",
     spei = "Climate",
     n_grasshop = "Grasshopper",
-    n_grasshop_previous = "Grasshopper[t-1]",
     years_since_last_burn = "Time~since~fire",
     `bison1.n_grasshop` = "Bison:GH",
     `bison1:n_grasshop` = "Bison:GH",
@@ -256,7 +294,7 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
       range_coeff = round(range_coeff, 2),
       label = as.character(range_coeff),
       var = recode(var, !!!var_lookup),
-      var = fct_relevel(var,c("Climate", "Time~since~fire", "Burn~interval", "Bison", "Grasshopper", "Grasshopper[t-1]", "Bison:GH", "Bison_mod", "GH_mod"))
+      var = fct_relevel(var,c("Climate", "Time~since~fire", "Burn~interval", "Bison", "Grasshopper", "Bison:GH", "Bison_mod", "GH_mod"))
       
     )
   
@@ -272,7 +310,7 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
       mutate(
         mod = recode(mod, !!!mod_lookup), # !!! unpacks the named vector so each named element becomes its own argument for recode()
         var = recode(var, !!!var_lookup),
-        var = fct_relevel(var,c("Climate", "Time~since~fire", "Burn~interval", "Bison", "Grasshopper", "Grasshopper[t-1]", "Bison:GH", "Bison_mod", "GH_mod")),
+        var = fct_relevel(var,c("Climate", "Time~since~fire", "Burn~interval", "Bison", "Grasshopper", "Bison:GH", "Bison_mod", "GH_mod")),
         sig = mapply(
           function(m, v) v %in% f_labels$var[f_labels$mod == m],
           mod, var

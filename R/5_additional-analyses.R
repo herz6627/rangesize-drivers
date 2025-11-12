@@ -5,6 +5,7 @@
 # library -----------------------------------------------------------------
 library(MuMIn)
 library(lme4)
+library(V.PhyloMaker2)
 library(tidyverse)
 
 # Load files --------------------------------------------------------------
@@ -175,6 +176,28 @@ dat <- col_dat %>%
   filter(var != "(Intercept)") 
 
 
+# make phylogeny ----------------------------------------------------------
+
+temp <- sp_info %>% # *** NOTE: using all species found at konza to make our tree. this should give better age estimates
+  select(species, genus, family) %>% # reduce
+  mutate(old_sp = species) %>% 
+  mutate(
+    across(c(species, genus, family), str_to_sentence), # capitalize
+    family = case_when( # fix old family names
+      genus == "Asclepias" ~ "Apocynaceae",
+      genus == "Ulmus" ~ "Ulmaceae",
+      .default = family
+    ),
+    species_ = gsub(" ", "_",species) # format name to match tree
+  ) %>%
+  distinct() # remove duplicates
+
+tree_out <- temp %>% 
+  phylo.maker(., scenarios=c("S1"))
+tree <- tree_out$scenario.1
+tree <- multi2di(tree) # root tree
+
+
 
 # stats for manuscript ----------------------------------------------------
 
@@ -244,18 +267,18 @@ ggsave("./figs/5_coeff-values-log-secondary.png", height = 3, width = 6)
 pdf("./figs/5_col-resids.pdf")
 col_mod_test_abs <- col_dat %>% 
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T)
+  mod_test(include_weights = T, phylo = tree)
 dev.off()
 pdf("./figs/5_cc-resids.pdf")
 cc_mod_test_abs <- cc_dat %>%
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>%
   # filter(species != "Gleditsia triacanthos") %>%
-  mod_test(include_weights = T)
+  mod_test(include_weights = T, phylo = tree)
 dev.off()
 pdf("./figs/5_ext-resids.pdf")
 ext_mod_test_abs <- ext_dat %>% 
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T)
+  mod_test(include_weights = T, phylo = tree)
 dev.off()
 # which models have range size as a predictor?
 res <- get_sig_coeffs(col_mod_test_abs, cc_mod_test_abs, ext_mod_test_abs)
@@ -272,7 +295,7 @@ pred_ext <- bind_rows(ext_mod_test_abs$predicted) %>%
 pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
 
 
-make_fig(dat_df = dat, pred_df = pred_dat, res, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"), height = 5.5, width = 4)
+make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs_list = res, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"), height = 5.5, width = 5)
 # # plot with only drivers of interest
 # make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs_list = res, height = 4, width = 4, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"), fld = "./figs/5_mod-res-subset-primary.png")
 # # plot with non-drivers of interest
@@ -303,19 +326,19 @@ pdf("./figs/5_col-resids-noXL.pdf")
 col_mod_test_abs <- col_dat %>% 
   filter(species %in% XL_sp) %>% 
   select('(Intercept)', bison1, fri,n_grasshop,  spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T)
+  mod_test(include_weights = T, phylo = tree)
 dev.off()
 pdf("./figs/5_cc-resids-noXL.pdf")
 cc_mod_test_abs <- cc_dat %>% 
   filter(species %in% XL_sp) %>% 
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T)
+  mod_test(include_weights = T, phylo = tree)
 dev.off()
 pdf("./figs/5_ext-resids-noXL.pdf")
 ext_mod_test_abs <- ext_dat %>% 
   filter(species %in% XL_sp) %>% 
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T)
+  mod_test(include_weights = T, phylo = tree)
 dev.off()
 
 
@@ -337,7 +360,7 @@ pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
 
 # make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs_list = res, height = 9, width = 4, fld = "./figs/5_mod-res-noXLrange.png", filter.sp = T, filter.sp.vec = XL_sp)
 # # plot with only drivers of interest
-make_fig(dat_df = dat, pred_df = pred_dat,  sig_coeffs_list = res, height = 5.5, width = 4, 
+make_fig(dat_df = dat, pred_df = pred_dat,  sig_coeffs_list = res, height = 5.5, width = 5, 
          # filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop", "fri", "n_grasshop_previous", "years_since_last_burn"), 
          filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"),
          fld = "./figs/5_mod-res-subset-noXL-primary.png", filter.sp = T,  filter.sp.vec = XL_sp)
@@ -362,125 +385,6 @@ res %>%
 
 
 
-# control for phylogeny ------------------------------------
-library("V.PhyloMaker2")
-
-# species list
-# http://lter.konza.ksu.edu/content/pps01-konza-prairie-plant-species-list
-sp_info <- read_csv("./data/PPS011.csv") %>%
-  rename(epithet = species) %>%
-  unite(species, genus, epithet, remove = F, sep = " ") %>%
-  mutate(species = str_to_sentence(species))
-
-temp <- sp_info %>% # *** NOTE: using all species found at konza to make our tree. this should give better age estimates
-  select(species, genus, family) %>% # reduce
-  mutate(old_sp = species) %>% 
-  mutate(
-    across(c(species, genus, family), str_to_sentence), # capitalize
-    family = case_when( # fix old family names
-      genus == "Asclepias" ~ "Apocynaceae",
-      genus == "Ulmus" ~ "Ulmaceae",
-      .default = family
-    )
-  ) %>%
-  distinct() # remove duplicates
-
-
-
-## colonization ---------------------------------
-# make tree. Species lists are different between the demographic rates. Just going to make each tree separately since the names are different than are in the dat dfs...
-tree_out <- temp %>% 
-  filter(species %in% col_dat$species,
-         # species %in% XL_sp
-         ) %>%  # also removing XL range sp
-  phylo.maker(., scenarios=c("S1"))
-tree <- tree_out$scenario.1
-tree <- multi2di(tree) # root tree
-# test model
-col_mod_test_abs <- col_dat %>% 
-  filter(species %in% XL_sp) %>% 
-  select('(Intercept)', bison1, fri,n_grasshop,  spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T, phylo = tree)
-
-## change in cover ---------------------------------
-# make tree. Species lists are different between the demographic rates. Just going to make each tree separately since the names are different than are in the dat dfs...
-tree_out <- temp %>% 
-  filter(species %in% cc_dat$species,
-         # species %in% XL_sp
-         ) %>%  # also removing XL range sp
-  phylo.maker(., scenarios=c("S1"))
-tree <- tree_out$scenario.1
-tree <- multi2di(tree) # root tree
-# test model
-cc_mod_test_abs <- cc_dat %>% 
-  filter(
-    # species %in% XL_sp
-         ) %>% 
-  select('(Intercept)', bison1, fri,n_grasshop,  spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T, phylo = tree)
-
-## extinction ---------------------------------
-# make tree. Species lists are different between the demographic rates. Just going to make each tree separately since the names are different than are in the dat dfs...
-tree_out <- temp %>% 
-  filter(species %in% ext_dat$species,
-         # species %in% XL_sp
-         ) %>%  # also removing XL range sp
-  phylo.maker(., scenarios=c("S1"))
-tree <- tree_out$scenario.1
-tree <- multi2di(tree) # root tree
-# test model
-ext_mod_test_abs <- ext_dat %>% 
-  filter(
-    # species %in% XL_sp
-         ) %>% 
-  select('(Intercept)', bison1, fri,n_grasshop,  spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-  mod_test(include_weights = T, phylo = tree)
-
-
-
-# which models have range size as a predictor?
-res <- get_sig_coeffs(col_mod_test_abs, cc_mod_test_abs, ext_mod_test_abs)
-res
-
-# cant really make a figure since our raw data doesn't match the scale of the model (weights and scaling for phylo)
-# so just make a table
-var_lookup <- c(
-  bison1 = "Bison",
-  fri = "Burn interval",
-  spei = "Climate",
-  n_grasshop = "Grasshopper",
-  years_since_last_burn = "Time since fire",
-  `bison1.n_grasshop` = "Bison:GH",
-  `bison1:n_grasshop` = "Bison:GH",
-  bison1_mod = "Bison_mod",
-  n_grasshop_mod = "GH_mod"
-)
-
-mod_lookup <- c(
-  col = "Colonization",
-  cc = "Change in cover",
-  ext = "Extirpation"
-)
-
-
-res %>% 
-  unlist() %>% 
-  as.data.frame() %>% 
-  rownames_to_column(var = "mod") %>% 
-  rename("range.coeff" = 2) %>% 
-  mutate(mod = case_when(mod == "cc.bison1.n_grasshop" ~ "cc.bison1:n_grasshop", # change character for interactions
-                         mod == "col.bison1.n_grasshop" ~ "col.bison1:n_grasshop",
-                         mod == "ext.bison1.n_grasshop" ~ "ext.bison1:n_grasshop",
-                         .default = mod)) %>% 
-  separate_wider_delim(1, delim = ".", names = c("mod", "driver")) %>% 
-  filter(driver %in% c('fri', 'spei', 'years_since_last_burn', 'n_grasshop', 'bison1')) %>% # only care about these drivers for manuscript
-  mutate(
-    mod = recode(mod, !!!mod_lookup), # !!! unpacks the named vector so each named element becomes its own argument for recode()
-    driver = recode(driver, !!!var_lookup),
-  ) %>% 
-  write_csv("./output/5_summary-table-range-coeff-vals-noXLrange-PHYLO.csv")
-
-
 # Just using grass species ------------------------------------------------
 grass_sp <- dat %>% 
   filter(growthform == "g",
@@ -493,17 +397,23 @@ grass_sp <- dat %>%
 col_mod_test_grass <- col_dat %>% 
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
   filter(species %in% grass_sp) %>%
-  mod_test(include_lifespan = F, include_weights = T) # not enough data to use lifespan
+  mod_test(include_lifespan = F, include_weights = T, 
+           # phylo = tree
+           ) # not enough data to use lifespan
 
 cc_mod_test_grass <- cc_dat %>% 
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
   filter(species %in% grass_sp) %>%
-  mod_test(include_lifespan = F, include_weights = T)
+  mod_test(include_lifespan = F, include_weights = T, 
+           # phylo = tree
+           )
 
 ext_mod_test_grass <- ext_dat %>% 
   select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
   filter(species %in% grass_sp) %>%
-  mod_test(include_lifespan = F, include_weights = T)
+  mod_test(include_lifespan = F, include_weights = T, 
+           # phylo = tree
+           )
 
 # which models have range size as a predictor?
 res <- get_sig_coeffs(col_mod_test_grass, cc_mod_test_grass, ext_mod_test_grass)
@@ -520,7 +430,7 @@ pred_ext <- bind_rows(ext_mod_test_grass$predicted) %>%
 pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
 
 
-make_fig(dat_df = dat, pred_df = pred_dat, res, height = 5.5, width = 4, fld = "./figs/5_mod-results-just-grass-sp.png", filter.sp = T, filter.sp.vec = grass_sp, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
+make_fig(dat_df = dat, pred_df = pred_dat, res, height = 5.5, width = 5, fld = "./figs/5_mod-results-just-grass-sp.png", filter.sp = T, filter.sp.vec = grass_sp, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
 
 # save
 res %>% 
@@ -534,6 +444,55 @@ res %>%
                          .default = mod)) %>% 
   separate_wider_delim(1, delim = ".", names = c("mod", "driver")) %>% 
   write_csv("./output/5_summary-table-range-coeff-vals-just-grass-sp.csv")
+
+
+# Just using aster species ------------------------------------------------
+ast_sp <- dat %>% 
+  filter(family == "asteraceae",
+         # range_size < 2 # removing XL range sizes! we have a big outlier. NOTE that this is smaller than the above range size limit
+  ) %>% 
+  select(species) %>% 
+  distinct() %>% 
+  pull(species)
+
+col_mod_test_ast <- col_dat %>% 
+  select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
+  filter(species %in% ast_sp) %>%
+  mod_test(include_lifespan = F, include_weights = T, 
+           # phylo = tree
+           ) # not enough data to use lifespan
+
+cc_mod_test_ast <- cc_dat %>% 
+  select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
+  filter(species %in% ast_sp) %>%
+  mod_test(include_lifespan = F, include_weights = T, 
+           # phylo = tree
+           )
+
+ext_mod_test_ast <- ext_dat %>% 
+  select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
+  filter(species %in% ast_sp) %>%
+  mod_test(include_lifespan = F, include_weights = T, 
+           # phylo = tree
+           )
+
+# which models have range size as a predictor?
+res <- get_sig_coeffs(col_mod_test_ast, cc_mod_test_ast, ext_mod_test_ast)
+res
+
+# plot
+# get linear model predictions
+pred_col <- bind_rows(col_mod_test_ast$predicted) %>% 
+  mutate(mod = "colonization")
+pred_cc <- bind_rows(cc_mod_test_ast$predicted) %>% 
+  mutate(mod = "midpoint_change")
+pred_ext <- bind_rows(ext_mod_test_ast$predicted) %>% 
+  mutate(mod = "extinction")
+pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
+
+
+make_fig(dat_df = dat, pred_df = pred_dat, res, height = 5.5, width = 5, fld = "./figs/5_mod-results-just-aster-sp.png", filter.sp = T, filter.sp.vec = ast_sp, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
+
 
 
 # GH sp ----------------------------------------------------------
@@ -600,7 +559,7 @@ for (i in 1:length(dats)) {
         across(1:7, ~.+0.001), # no zeros for log
         across(1:7, log), # response variables are now transformed to log(abs())
       ) %>% 
-      mod_test(., plot.title = paste0(dats[i], " log, col"))
+      mod_test(., plot.title = paste0(dats[i], " log, col"), phylo = tree)
     cc_mod_test_abs <- cc_dat %>% 
       mutate(
         # across(1:7, ~.+1), # no zeros for log
@@ -608,7 +567,7 @@ for (i in 1:length(dats)) {
         across(1:7, ~.+0.001), # no zeros for log
         across(1:7, log), # response variables are now transformed to log(abs())
       ) %>% 
-      mod_test(., plot.title = paste0(dats[i], " log cc"))
+      mod_test(., plot.title = paste0(dats[i], " log cc"), phylo = tree)
     ext_mod_test_abs <- ext_dat %>% 
       mutate(
         # across(1:7, ~.+1), # no zeros for log
@@ -616,7 +575,7 @@ for (i in 1:length(dats)) {
         across(1:7, ~.+0.001), # no zeros for log
         across(1:7, log), # response variables are now transformed to log(abs())
       ) %>% 
-      mod_test(.,  plot.title = paste0(dats[i], " log ext"))
+      mod_test(.,  plot.title = paste0(dats[i], " log ext"), phylo = tree)
     
     
     dat <- col_dat %>% 
@@ -725,13 +684,13 @@ for (i in 1:length(dats)) {
     # model testing
     col_mod_test_abs <- col_dat %>% 
       select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-      mod_test(., plot.title = paste0(dats[i], " log, col"))
+      mod_test(., plot.title = paste0(dats[i], " log, col"), phylo = tree)
     cc_mod_test_abs <- cc_dat %>% 
       select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-      mod_test(., plot.title = paste0(dats[i], " log cc"))
+      mod_test(., plot.title = paste0(dats[i], " log cc"), phylo = tree)
     ext_mod_test_abs <- ext_dat %>% 
       select('(Intercept)', bison1, fri,n_grasshop, spei, years_since_last_burn, 'bison1:n_grasshop', bison1_mod, n_grasshop_mod, n, everything()) %>% 
-      mod_test(.,  plot.title = paste0(dats[i], " log ext"))
+      mod_test(.,  plot.title = paste0(dats[i], " log ext"), phylo = tree)
     
     ## combine data and format -------------------------------------------------
     dat <- col_dat %>% 
@@ -776,7 +735,7 @@ for (i in 1:length(dats)) {
   pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
   
   
-  make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs, height = 5.5, width = 4, fld = paste0("./figs/5_mod-results-",dats[i], ".png"), filter.sp = T, filter.sp.vec = sp, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
+  make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs, height = 5.5, width = 5, fld = paste0("./figs/5_mod-results-",dats[i], ".png"), filter.sp = T, filter.sp.vec = sp, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
   
   # if(dats[i] == "gh") {
   #   # plot with only drivers of interest

@@ -25,7 +25,7 @@ mod_list_to_df <- function(mod){ # helper function
 mod_test <- function( # run linear models and model selection
   dat, # dataset
   include_interaction = F, # whether to include an interaction between range size and lifespan
-  include_lifespan = T, # if T, includes a lifespan paremeter
+  include_lifespan = T, # if T, includes a lifespan parameter
   plot.title = NULL, # plot title for summary output
   include_weights = F, # if T, weights models by n (number of observations)
   phylo = NULL # object should be a phylogenetic tree with species names matching dat. if a tree is provided, models will weight by phylogenetic relatedness. Tree will be trimmed to species in dat.
@@ -36,12 +36,6 @@ mod_test <- function( # run linear models and model selection
   
   params <- (ncol(dat)-3) # number of parameters # ! this value (3) includes a column of n (+species+range_size)
   message(paste("detected ", params, " parameters"))
-  
-  if (!is.null(phylo)) { # trim tree to only species included in the dataset
-    # prune tree to only the branches in the species list
-    pruned.tree <- drop.tip(tree,tree$tip.label[-match(filter(temp, species %in% col_dat$species)$species_, tree$tip.label)])
-    
-  }
   
   
   for (col in 2:params) { # iterate over columns (drivers)
@@ -85,15 +79,19 @@ mod_test <- function( # run linear models and model selection
       temp <- temp %>% 
         mutate(species = gsub(" ", "_", species)) # species name needs to match phylo tree
       
+      # trim tree to only observed sp
+      pruned.tree <- drop.tip(phylo, phylo$tip.label[-match(temp$species, phylo$tip.label)])
+      
+      
       if(include_weights) {
         mod <- nlme::gls(as.formula(form),
-                         correlation = ape::corBrownian(phy = phylo, form = ~species),
+                         correlation = ape::corBrownian(phy = pruned.tree, form = ~species),
                          weights = nlme::varFixed(~I(1/n)), # slightly different format than regular lm model
                          data = temp,
                          method = "ML")
       } else {
         mod <- nlme::gls(as.formula(form),
-                         correlation = ape::corBrownian(phy = phylo, form = ~species),
+                         correlation = ape::corBrownian(phy = pruned.tree, form = ~species),
                          data = temp,
                          method = "ML")
       }
@@ -137,6 +135,7 @@ mod_test <- function( # run linear models and model selection
     names(out2)[col] <- temp_name
     
     out3[[col]] <- temp %>%
+      # select(-species) %>%  # remove species column if present (only present if phylo analysis; dont want to have species specific values)
       rename(val = 1) %>% # rename first column to show it is just the driver response
       mutate(pred = predict(top_mod),
              var = temp_name) # driver name column
@@ -302,7 +301,9 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
   prepare_df <- function(df, filter_species = filter.sp) {
     # Only filter if the species column exists and filtering is requested
     if(filter_species && "species" %in% names(df)) {
-      df <- df %>% filter(species %in% filter.sp.vec)
+      df <- df %>% 
+        mutate(species = gsub("_", " ", species)) %>% # format species names if needed
+        filter(species %in% filter.sp.vec)
     }
     
     df %>%
@@ -331,11 +332,15 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
   )
   
   # Plot
-  p <- ggplot(temp_dat, aes(x = range_size, y = val)) +
+  p <- 
+    ggplot(temp_dat, aes(x = range_size, y = val)) +
     geom_hline(yintercept = 0, color = "gray80") +
-    geom_point(color = "darkgray", alpha = 0.75) +
+    geom_point(alpha = 0.75, aes(color = n)) +
+    scale_color_viridis_c(option = "D") +
+    labs(color = "Number of \nobservations") +
+    ggnewscale::new_scale_color() +  # reset color mapping
     geom_line(data = filter(temp_pred_df, lifespan == "p"), # only plotting line for perennial species. This factor has been acounted for in our models
-              aes(y = pred, color = sig), linewidth = 1) +
+              aes(y = pred, color = sig, group = lifespan), linewidth = 1) +
     scale_color_manual(values = c("TRUE" = "darkslateblue"), na.value = NA, guide = "none") +
     facet_grid(factor(var, levels = levels(temp_dat$var)) ~ factor(mod, levels = mod_lookup), # have to force the facet order
                labeller = label_parsed) +

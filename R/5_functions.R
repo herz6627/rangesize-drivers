@@ -27,8 +27,7 @@ mod_test <- function( # run linear models and model selection
   include_interaction = F, # whether to include an interaction between range size and lifespan
   include_lifespan = T, # if T, includes a lifespan parameter
   plot.title = NULL, # plot title for summary output
-  include_weights = F, # if T, weights models by n (number of observations)
-  phylo = NULL # object should be a phylogenetic tree with species names matching dat. if a tree is provided, models will weight by phylogenetic relatedness. Tree will be trimmed to species in dat.
+  include_weights = F # if T, weights models by n (number of observations)
 ){ 
   out1 <- list() # list to fill with full dredge output
   out2 <- list() # list to fill with just coefficients from dredge output
@@ -72,40 +71,13 @@ mod_test <- function( # run linear models and model selection
       print("ignoring 'include_interaction' parameter")
     }
     
-    
     # model
-    if (!is.null(phylo)) {
-      
-      temp <- temp %>% 
-        mutate(species = gsub(" ", "_", species)) # species name needs to match phylo tree
-      
-      # trim tree to only observed sp
-      pruned.tree <- drop.tip(phylo, phylo$tip.label[-match(temp$species, phylo$tip.label)])
-      
-      
-      if(include_weights) {
-        mod <- nlme::gls(as.formula(form),
-                         correlation = ape::corBrownian(phy = pruned.tree, form = ~species),
-                         weights = nlme::varFixed(~I(1/n)), # slightly different format than regular lm model
-                         data = temp,
-                         method = "ML")
-      } else {
-        mod <- nlme::gls(as.formula(form),
-                         correlation = ape::corBrownian(phy = pruned.tree, form = ~species),
-                         data = temp,
-                         method = "ML")
-      }
-      
-    } else{
-      
       if(include_weights) {
         mod <- lm(as.formula(form), data = temp, na.action = "na.fail", weights = n)
       } else {
         mod <- lm(as.formula(form), data = temp, na.action = "na.fail")
       }
       
-    }
-    
     
     # residuals
     # simulationOutput <- DHARMa::simulateResiduals(fittedModel = mod, plot = F)
@@ -135,13 +107,10 @@ mod_test <- function( # run linear models and model selection
     names(out2)[col] <- temp_name
     
     out3[[col]] <- temp %>%
-      # select(-species) %>%  # remove species column if present (only present if phylo analysis; dont want to have species specific values)
       rename(val = 1) %>% # rename first column to show it is just the driver response
       mutate(pred = predict(top_mod),
              var = temp_name) # driver name column
     names(out3)[col] <- temp_name
-    
-    
     
   }
   out <- list(out1, out2, out3
@@ -335,10 +304,7 @@ make_fig <- function(dat_df = dat, pred_df = pred_dat, sig_coeffs_list,
   p <- 
     ggplot(temp_dat, aes(x = range_size, y = val)) +
     geom_hline(yintercept = 0, color = "gray80") +
-    geom_point(alpha = 0.75, aes(color = n)) +
-    scale_color_viridis_c(option = "D") +
-    labs(color = "Number of \nobservations") +
-    ggnewscale::new_scale_color() +  # reset color mapping
+    geom_point(color = "darkgray", alpha = 0.75) +
     geom_line(data = filter(temp_pred_df, lifespan == "p"), # only plotting line for perennial species. This factor has been acounted for in our models
               aes(y = pred, color = sig, group = lifespan), linewidth = 1) +
     scale_color_manual(values = c("TRUE" = "darkslateblue"), na.value = NA, guide = "none") +

@@ -35,7 +35,7 @@ Included R files are described below:
 Cleans and formats datasets.
 ## 2_range-size-estimation.R
 Download and clean occurrence records, then estimate range size. Depends on functions in 2_func_mcp-sh.R
-Specific iDigBio and GBIF records used to estimate range size can be found at XXXX
+Specific iDigBio and GBIF records used to estimate range size can be found at 10.6084/m9.figshare.30402406 (Figshare).
 ## 2_func_mcp-sh.R
 Custom code largely based on the adehabitatHR R package (Calenge C, Fortmann-Roe cfS (2023). _adehabitatHR: Home Range Estimation_. R package version 0.4.21,
   <https://CRAN.R-project.org/package=adehabitatHR>). 

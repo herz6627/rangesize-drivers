@@ -271,7 +271,7 @@ pred_ext <- bind_rows(ext_mod_test_abs$predicted) %>%
 pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
 
 
-make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs_list = res, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"), height = 5.5, width = 5)
+make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs_list = res, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"), height = 5.5, width = 4)
 # # plot with only drivers of interest
 # make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs_list = res, height = 4, width = 4, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"), fld = "./figs/5_mod-res-subset-primary.png")
 # # plot with non-drivers of interest
@@ -332,11 +332,11 @@ pred_cc <- bind_rows(cc_mod_test_abs$predicted) %>%
   mutate(mod = "midpoint_change")
 pred_ext <- bind_rows(ext_mod_test_abs$predicted) %>% 
   mutate(mod = "extinction")
-pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
+pred_dat_noXL <- bind_rows(pred_col, pred_cc, pred_ext)
 
 # make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs_list = res, height = 9, width = 4, fld = "./figs/5_mod-res-noXLrange.png", filter.sp = T, filter.sp.vec = XL_sp)
 # # plot with only drivers of interest
-make_fig(dat_df = dat, pred_df = pred_dat,  sig_coeffs_list = res, height = 5.5, width = 5, 
+make_fig(dat_df = dat, pred_df = pred_dat_noXL,  sig_coeffs_list = res, height = 5.5, width = 4, 
          # filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop", "fri", "n_grasshop_previous", "years_since_last_burn"), 
          filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"),
          fld = "./figs/5_mod-res-subset-noXL-primary.png", filter.sp = T,  filter.sp.vec = XL_sp)
@@ -392,8 +392,8 @@ ext_mod_test_grass <- ext_dat %>%
            )
 
 # which models have range size as a predictor?
-res <- get_sig_coeffs(col_mod_test_grass, cc_mod_test_grass, ext_mod_test_grass)
-res
+res_grass <- get_sig_coeffs(col_mod_test_grass, cc_mod_test_grass, ext_mod_test_grass)
+res_grass
 
 # plot
 # get linear model predictions
@@ -403,13 +403,20 @@ pred_cc <- bind_rows(cc_mod_test_grass$predicted) %>%
   mutate(mod = "midpoint_change")
 pred_ext <- bind_rows(ext_mod_test_grass$predicted) %>% 
   mutate(mod = "extinction")
-pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
+pred_dat_grass <- bind_rows(pred_col, pred_cc, pred_ext)
 
 
-make_fig(dat_df = dat, pred_df = pred_dat, res, height = 5.5, width = 5, fld = "./figs/5_mod-results-just-grass-sp.png", filter.sp = T, filter.sp.vec = grass_sp, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
+make_fig(dat_df = dat, 
+         pred_df = pred_dat_grass, 
+         res_grass, 
+         height = 5.5, width = 4, fld = "./figs/5_mod-results-just-grass-sp.png", 
+         filter.sp = T, 
+         filter.sp.vec = grass_sp, 
+         filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop")
+         )
 
 # save
-res %>% 
+res_grass %>% 
   unlist() %>% 
   as.data.frame() %>% 
   rownames_to_column(var = "mod") %>% 
@@ -506,7 +513,7 @@ for (i in 1:length(dats)) {
       mod_test(.,  plot.title = paste0(dats[i], " log ext"))
     
     
-    dat <- col_dat %>% 
+    gh_dat <- col_dat %>% 
       mutate(mod = "colonization") %>% 
       full_join(cc_dat %>% mutate(mod = "midpoint_change"))%>% 
       full_join(ext_dat %>% mutate(mod = "extinction")) %>% 
@@ -621,7 +628,7 @@ for (i in 1:length(dats)) {
       mod_test(.,  plot.title = paste0(dats[i], " log ext"))
     
     ## combine data and format -------------------------------------------------
-    dat <- col_dat %>% 
+    gh_dat <- col_dat %>% 
       mutate(mod = "colonization") %>% 
       full_join(cc_dat %>% mutate(mod = "midpoint_change"))%>% 
       full_join(ext_dat %>% mutate(mod = "extinction")) %>% 
@@ -634,13 +641,13 @@ for (i in 1:length(dats)) {
   }
   
   # which models have range size as a predictor?
-  sig_coeffs <- get_sig_coeffs(col_mod_test_abs, cc_mod_test_abs, ext_mod_test_abs)
+  res_gh <- get_sig_coeffs(col_mod_test_abs, cc_mod_test_abs, ext_mod_test_abs)
   # range_size coefficient values for the given driver models
   print(paste0("results for log transformed:", dats[i]))
-  print(sig_coeffs)
+  print(res_gh)
   
   # save
-  sig_coeffs %>% 
+  res_gh %>% 
     unlist() %>% 
     as.data.frame() %>% 
     rownames_to_column(var = "mod") %>% 
@@ -660,19 +667,102 @@ for (i in 1:length(dats)) {
     mutate(mod = "midpoint_change")
   pred_ext <- bind_rows(ext_mod_test_abs$predicted) %>%
     mutate(mod = "extinction")
-  pred_dat <- bind_rows(pred_col, pred_cc, pred_ext)
+  pred_dat_gh <- bind_rows(pred_col, pred_cc, pred_ext)
   
   
-  make_fig(dat_df = dat, pred_df = pred_dat, sig_coeffs, height = 5.5, width = 5, fld = paste0("./figs/5_mod-results-",dats[i], ".png"), filter.sp = T, filter.sp.vec = sp, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
+  make_fig(dat_df = gh_dat, 
+           pred_df = pred_dat_gh, 
+           res_gh, 
+           height = 5.5, width = 4, fld = paste0("./figs/5_mod-results-",dats[i], ".png"), 
+           filter.sp = T, 
+           filter.sp.vec = sp, 
+           filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
   
-  # if(dats[i] == "gh") {
-  #   # plot with only drivers of interest
-  #   make_fig(sig_coeffs_list = sig_coeffs, height = 4, width = 4, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1:n_grasshop", "bison1.n_grasshop", "fri", "years_since_last_burn"), fld = paste0("./figs/5_mod-results-",dats[i], "-primary.png"), filter.sp = T, filter.sp.vec = sp)
-  #   # plot with non-drivers of interest
-  #   make_fig(sig_coeffs_list = sig_coeffs, height = 6.5, width = 4, filter.var.vec = c("bison1", "spei","n_grasshop"), fld = paste0("./figs/5_mod-results-",dats[i], "-secondary.png"), filter.sp = T, filter.sp.vec = sp)
-  #   
-  # }
+  if(dats[i] == "gh") {
+    
+    dat_gh = gh_dat # for use later
+    
+    # # plot with only drivers of interest
+    # make_fig(sig_coeffs_list = sig_coeffs, height = 4, width = 4, filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1:n_grasshop", "bison1.n_grasshop", "fri", "years_since_last_burn"), fld = paste0("./figs/5_mod-results-",dats[i], "-primary.png"), filter.sp = T, filter.sp.vec = sp)
+    # # plot with non-drivers of interest
+    # make_fig(sig_coeffs_list = sig_coeffs, height = 6.5, width = 4, filter.var.vec = c("bison1", "spei","n_grasshop"), fld = paste0("./figs/5_mod-results-",dats[i], "-secondary.png"), filter.sp = T, filter.sp.vec = sp)
+
+  }
 }
+
+
+# combined figure ---------------------------------------------------------
+# want all species (including XL range sp) for climate, TSF, and FRI
+# only grass sp for bison, 
+# and only GH sp for grasshopper
+
+# get dat set up
+dat_sub = dat |> 
+  filter(var %in% c("spei", "years_since_last_burn", "fri"))
+
+dat_grass = dat %>% 
+  filter(
+    growthform == "g",
+    var %in% c("bison1")
+  )
+
+dat_gh = dat_gh |> 
+  filter(var %in% c("n_grasshop"))
+
+dat_merged = bind_rows(dat_sub, dat_grass, dat_gh)
+
+
+# get prediction values assembled
+pred1 <- pred_dat |> 
+  filter(var %in% c("spei", "years_since_last_burn", "fri"))
+
+pred2 <- pred_dat_grass |> 
+  filter(
+    growthform == "g",
+    var %in% c("bison1")
+  )
+
+pred3 <- pred_dat_gh |> 
+  filter(var %in% c("n_grasshop"))
+
+pred_merged = bind_rows(pred1, pred2, pred3)
+
+
+
+# get regression results set up
+res1 = 
+  lapply(res, function(x) {
+  x[intersect(names(x), c("spei", "years_since_last_burn", "fri"))]
+})
+
+res2 = 
+  lapply(res_grass, function(x) {
+    x[intersect(names(x), c("bison1"))]
+  })
+
+res3 = 
+  lapply(res_gh, function(x) {
+    x[intersect(names(x), c("n_grasshop"))]
+  })
+
+# now combine them
+lst = list(res1, res2, res3)
+  
+res_combined <- lapply(names(lst[[1]]), function(nm) {
+  do.call(c, lapply(lst, `[[`, nm))
+})
+names(res_combined) <- names(lst[[1]])
+
+
+# make the figure
+make_fig(dat_df = dat_merged, 
+         pred_df = pred_merged, 
+         res_combined, 
+         height = 5.5, width = 4, fld = paste0("./figs/5_mod-results-merged.png"), 
+         filter.sp = F, 
+         filter.var.vec = c("bison1_mod", "n_grasshop_mod", "bison1.n_grasshop", "bison1:n_grasshop"))
+
+
 
 
 

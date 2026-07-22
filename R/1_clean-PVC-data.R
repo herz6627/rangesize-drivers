@@ -236,13 +236,13 @@ clim_dat_raw <- read_csv("./data/AWE012.csv", col_types = cols(.default = "?",
                                                                SMAX = "n",
                                                                SMIN = "n",
                                                                S_AVE = "n",
-                                                               WAVE = "n")) %>%  #daily
+                                                               WAVE = "n"), na=c("",".", "NA")) %>%  #daily
   rename_with(tolower) # standardize col name formats
 
 # Konza HQ precipitation. More accurate than the AWE01 tipping bucket method (per the AWE01 metadata)
 # http://lter.konza.ksu.edu/content/awe01-meteorological-data-konza-prairie-headquarters-weather-station
 precip_dat_raw <- read_csv("./data/APT011.csv", col_types = c(.default = "?",
-                                                              ppt = "n")) # missing values = ".". These should be replaced as NA when converting to numeric
+                                                              ppt = "n"), na=c("",".", "NA")) # missing values = ".". These should be replaced as NA when converting to numeric
 
 # average precip and temp data - for methods
 print(paste0("Mean annual temp for konza from 1983 to 2023 is ",

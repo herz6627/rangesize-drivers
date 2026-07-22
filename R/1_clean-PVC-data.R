@@ -389,6 +389,7 @@ grasshopper_dat <-
   mutate(n_grasshop_previous = lag(n_grasshop, order_by = recyear)) %>% 
   rename(year = recyear) # match with pvc
 
+
 # merge datasets ----------------------------------------------------------
 dat_all <- pvc_long %>% 
   left_join(clim_dat) %>% 

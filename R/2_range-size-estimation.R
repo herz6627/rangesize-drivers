@@ -94,7 +94,7 @@ good_species <- rep(NA, length(sn_cap))
 land <- rnaturalearth::ne_countries(returnclass = "sf", continent = c("North America", "South America")) %>%
   st_union()
 all_areas <- as.data.frame(matrix(NA, nrow=length(sn_cap), ncol= 2))
-for (i in 1:length(sn_cap)){
+for (i in 40:length(sn_cap)){
     # code that runs in both parallel & not 
     good_species_i <- TRUE
     

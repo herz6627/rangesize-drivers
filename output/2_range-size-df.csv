@@ -3,514 +3,514 @@
 "2","Andropogon gerardii",0.00111257681388244
 "3","Schizachyrium scoparium",0.00106942535855209
 "4","Bouteloua curtipendula",0.0022660344472847
-"5",NA,NA
-"6",NA,NA
-"7",NA,NA
-"8",NA,NA
-"9",NA,NA
-"10",NA,NA
-"11",NA,NA
-"12",NA,NA
-"13",NA,NA
-"14",NA,NA
-"15",NA,NA
-"16",NA,NA
-"17",NA,NA
-"18",NA,NA
-"19",NA,NA
-"20",NA,NA
-"21",NA,NA
-"22",NA,NA
-"23",NA,NA
-"24",NA,NA
-"25",NA,NA
-"26",NA,NA
-"27",NA,NA
-"28",NA,NA
-"29",NA,NA
-"30",NA,NA
-"31",NA,NA
-"32",NA,NA
-"33",NA,NA
-"34",NA,NA
-"35",NA,NA
-"36",NA,NA
-"37",NA,NA
-"38",NA,NA
-"39",NA,NA
-"40",NA,NA
-"41",NA,NA
-"42",NA,NA
-"43",NA,NA
-"44",NA,NA
-"45",NA,NA
-"46",NA,NA
-"47",NA,NA
-"48",NA,NA
-"49",NA,NA
-"50",NA,NA
-"51",NA,NA
-"52",NA,NA
-"53",NA,NA
-"54",NA,NA
-"55",NA,NA
-"56",NA,NA
-"57",NA,NA
-"58",NA,NA
-"59",NA,NA
-"60",NA,NA
-"61",NA,NA
-"62",NA,NA
-"63",NA,NA
-"64",NA,NA
-"65",NA,NA
-"66",NA,NA
-"67",NA,NA
-"68",NA,NA
-"69",NA,NA
-"70",NA,NA
-"71",NA,NA
-"72",NA,NA
-"73",NA,NA
-"74",NA,NA
-"75",NA,NA
-"76",NA,NA
-"77",NA,NA
-"78",NA,NA
-"79",NA,NA
-"80",NA,NA
-"81",NA,NA
-"82",NA,NA
-"83",NA,NA
-"84",NA,NA
-"85",NA,NA
-"86",NA,NA
-"87",NA,NA
-"88",NA,NA
-"89",NA,NA
-"90",NA,NA
-"91",NA,NA
-"92",NA,NA
-"93",NA,NA
-"94",NA,NA
-"95",NA,NA
-"96",NA,NA
-"97",NA,NA
-"98",NA,NA
-"99",NA,NA
-"100",NA,NA
-"101",NA,NA
-"102",NA,NA
-"103",NA,NA
-"104",NA,NA
-"105",NA,NA
-"106",NA,NA
-"107",NA,NA
-"108",NA,NA
-"109",NA,NA
-"110",NA,NA
-"111",NA,NA
-"112",NA,NA
-"113",NA,NA
-"114",NA,NA
-"115",NA,NA
-"116",NA,NA
-"117",NA,NA
-"118",NA,NA
-"119",NA,NA
-"120",NA,NA
-"121",NA,NA
-"122",NA,NA
-"123",NA,NA
-"124",NA,NA
-"125",NA,NA
-"126",NA,NA
-"127",NA,NA
-"128",NA,NA
-"129",NA,NA
-"130",NA,NA
-"131",NA,NA
-"132",NA,NA
-"133",NA,NA
-"134",NA,NA
-"135",NA,NA
-"136",NA,NA
-"137",NA,NA
-"138",NA,NA
-"139",NA,NA
-"140",NA,NA
-"141",NA,NA
-"142",NA,NA
-"143",NA,NA
-"144",NA,NA
-"145",NA,NA
-"146",NA,NA
-"147",NA,NA
-"148",NA,NA
-"149",NA,NA
-"150",NA,NA
-"151",NA,NA
-"152",NA,NA
-"153",NA,NA
-"154",NA,NA
-"155",NA,NA
-"156",NA,NA
-"157",NA,NA
-"158",NA,NA
-"159",NA,NA
-"160",NA,NA
-"161",NA,NA
-"162",NA,NA
-"163",NA,NA
-"164",NA,NA
-"165",NA,NA
-"166",NA,NA
-"167",NA,NA
-"168",NA,NA
-"169",NA,NA
-"170",NA,NA
-"171",NA,NA
-"172",NA,NA
-"173",NA,NA
-"174",NA,NA
-"175",NA,NA
-"176",NA,NA
-"177",NA,NA
-"178",NA,NA
-"179",NA,NA
-"180",NA,NA
-"181",NA,NA
-"182",NA,NA
-"183",NA,NA
-"184",NA,NA
-"185",NA,NA
-"186",NA,NA
-"187",NA,NA
-"188",NA,NA
-"189",NA,NA
-"190",NA,NA
-"191",NA,NA
-"192",NA,NA
-"193",NA,NA
-"194",NA,NA
-"195",NA,NA
-"196",NA,NA
-"197",NA,NA
-"198",NA,NA
-"199",NA,NA
-"200",NA,NA
-"201",NA,NA
-"202",NA,NA
-"203",NA,NA
-"204",NA,NA
-"205",NA,NA
-"206",NA,NA
-"207",NA,NA
-"208",NA,NA
-"209",NA,NA
-"210",NA,NA
-"211",NA,NA
-"212",NA,NA
-"213",NA,NA
-"214",NA,NA
-"215",NA,NA
-"216",NA,NA
-"217",NA,NA
-"218",NA,NA
-"219",NA,NA
-"220",NA,NA
-"221",NA,NA
-"222",NA,NA
-"223",NA,NA
-"224",NA,NA
-"225",NA,NA
-"226",NA,NA
-"227",NA,NA
-"228",NA,NA
-"229",NA,NA
-"230",NA,NA
-"231",NA,NA
-"232",NA,NA
-"233",NA,NA
-"234",NA,NA
-"235",NA,NA
-"236",NA,NA
-"237",NA,NA
-"238",NA,NA
-"239",NA,NA
-"240",NA,NA
-"241",NA,NA
-"242",NA,NA
-"243",NA,NA
-"244",NA,NA
-"245",NA,NA
-"246",NA,NA
-"247",NA,NA
-"248",NA,NA
-"249",NA,NA
-"250",NA,NA
-"251",NA,NA
-"252",NA,NA
-"253",NA,NA
-"254",NA,NA
-"255",NA,NA
-"256",NA,NA
-"257",NA,NA
-"258",NA,NA
-"259",NA,NA
-"260",NA,NA
-"261",NA,NA
-"262",NA,NA
-"263",NA,NA
-"264",NA,NA
-"265",NA,NA
-"266",NA,NA
-"267",NA,NA
-"268",NA,NA
-"269",NA,NA
-"270",NA,NA
-"271",NA,NA
-"272",NA,NA
-"273",NA,NA
-"274",NA,NA
-"275",NA,NA
-"276",NA,NA
-"277",NA,NA
-"278",NA,NA
-"279",NA,NA
-"280",NA,NA
-"281",NA,NA
-"282",NA,NA
-"283",NA,NA
-"284",NA,NA
-"285",NA,NA
-"286",NA,NA
-"287",NA,NA
-"288",NA,NA
-"289",NA,NA
-"290",NA,NA
-"291",NA,NA
-"292",NA,NA
-"293",NA,NA
-"294",NA,NA
-"295",NA,NA
-"296",NA,NA
-"297",NA,NA
-"298",NA,NA
-"299",NA,NA
-"300",NA,NA
-"301",NA,NA
-"302",NA,NA
-"303",NA,NA
-"304",NA,NA
-"305",NA,NA
-"306",NA,NA
-"307",NA,NA
-"308",NA,NA
-"309",NA,NA
-"310",NA,NA
-"311",NA,NA
-"312",NA,NA
-"313",NA,NA
-"314",NA,NA
-"315",NA,NA
-"316",NA,NA
-"317",NA,NA
-"318",NA,NA
-"319",NA,NA
-"320",NA,NA
-"321",NA,NA
-"322",NA,NA
-"323",NA,NA
-"324",NA,NA
-"325",NA,NA
-"326",NA,NA
-"327",NA,NA
-"328",NA,NA
-"329",NA,NA
-"330",NA,NA
-"331",NA,NA
-"332",NA,NA
-"333",NA,NA
-"334",NA,NA
-"335",NA,NA
-"336",NA,NA
-"337",NA,NA
-"338",NA,NA
-"339",NA,NA
-"340",NA,NA
-"341",NA,NA
-"342",NA,NA
-"343",NA,NA
-"344",NA,NA
-"345",NA,NA
-"346",NA,NA
-"347",NA,NA
-"348",NA,NA
-"349",NA,NA
-"350",NA,NA
-"351",NA,NA
-"352",NA,NA
-"353",NA,NA
-"354",NA,NA
-"355",NA,NA
-"356",NA,NA
-"357",NA,NA
-"358",NA,NA
-"359",NA,NA
-"360",NA,NA
-"361",NA,NA
-"362",NA,NA
-"363",NA,NA
-"364",NA,NA
-"365",NA,NA
-"366",NA,NA
-"367",NA,NA
-"368",NA,NA
-"369",NA,NA
-"370",NA,NA
-"371",NA,NA
-"372",NA,NA
-"373",NA,NA
-"374",NA,NA
-"375",NA,NA
-"376",NA,NA
-"377",NA,NA
-"378",NA,NA
-"379",NA,NA
-"380",NA,NA
-"381",NA,NA
-"382",NA,NA
-"383",NA,NA
-"384",NA,NA
-"385",NA,NA
-"386",NA,NA
-"387",NA,NA
-"388",NA,NA
-"389",NA,NA
-"390",NA,NA
-"391",NA,NA
-"392",NA,NA
-"393",NA,NA
-"394",NA,NA
-"395",NA,NA
-"396",NA,NA
-"397",NA,NA
-"398",NA,NA
-"399",NA,NA
-"400",NA,NA
-"401",NA,NA
-"402",NA,NA
-"403",NA,NA
-"404",NA,NA
-"405",NA,NA
-"406",NA,NA
-"407",NA,NA
-"408",NA,NA
-"409",NA,NA
-"410",NA,NA
-"411",NA,NA
-"412",NA,NA
-"413",NA,NA
-"414",NA,NA
-"415",NA,NA
-"416",NA,NA
-"417",NA,NA
-"418",NA,NA
-"419",NA,NA
-"420",NA,NA
-"421",NA,NA
-"422",NA,NA
-"423",NA,NA
-"424",NA,NA
-"425",NA,NA
-"426",NA,NA
+"5","Bouteloua gracilis",0.000802118997423144
+"6","Bouteloua hirsuta",0.00068249185308821
+"7","Bouteloua dactyloides",0.000470947371999223
+"8","Chloris verticillata",0.000614358008658742
+"9","Elymus canadensis",0.00128109354652962
+"10","Elymus virginicus",0.000892562668714849
+"11","Eragrostis spectabilis",0.000727179378966623
+"12","Koeleria macrantha",0.00106475102298516
+"13","Muhlenbergia cuspidata",0.000491936041965328
+"14","Dichanthelium oligosanthes",0.000951134332214024
+"15","Panicum virgatum",0.00126308521558647
+"16","Dichanthelium ovale",0.000518335007181077
+"17","Poa pratensis",0.0117214320184037
+"18","Sorghastrum nutans",0.000901046343811059
+"19","Spartina pectinata",0.000961656181820374
+"20","Sphenopholis obtusata",0.00105875700702388
+"21","Sporobolus compositus",0.0007766647348868
+"22","Sporobolus cryptandrus",0.0011404472132949
+"23","Sporobolus heterolepis",0.000378318370272646
+"24","Aristida oligantha",0.000808424973157834
+"25","Bromus arvensis",0.00237186594138188
+"26","Bromus tectorum",0.00134571504817984
+"27","Vulpia octoflora",0.00110491321367542
+"28","Hordeum pusillum",0.000752048863041796
+"29","Panicum capillare",0.00161359929872034
+"30","Schedonnardus paniculatus",0.000329038866586216
+"31","Carex brevior",0.00103169279885483
+"32","Carex gravida",0.000407056135071806
+"33","Carex inops",0.000564854014724351
+"34","Carex meadii",0.000271707834537748
+"35","Carex blanda",0.000522188974185426
+"36","Cyperus lupulinus",0.000470670573884044
+"37","Cyperus x mesochorus",0.000293519343248024
+"38","Eleocharis compressa",0.000750126388124949
+"39","Eleocharis erythropoda",0.00125129712143087
+"40","Amorpha canescens",0.000278322335486803
+"41","Ceanothus herbaceus",0.000449491847744524
+"42","Rosa arkansana",0.000480385402840355
+"43","Symphoricarpos orbiculatus",0.000499582157202138
+"44","Achillea millefolium",0.00655626170759487
+"45","Allium canadense",0.000533944622002479
+"46","Ambrosia psilostachya",0.0010354490727488
+"47","Androsace occidentalis",0.000579174623186396
+"48","Anemone caroliniana",0.00017662632905659
+"49","Antennaria neglecta",0.00127766660703111
+"50","Apocynum cannabinum",0.001578814166346
+"51","Argemone polyanthemos",0.000223648678803766
+"52","Artemisia ludoviciana",0.00157392414130457
+"53","Asclepias stenophylla",0.000142025255020152
+"54","Asclepias verticillata",0.000606799969446266
+"55","Asclepias viridis",0.000207939086345803
+"56","Asclepias tuberosa",0.000874717311067534
+"57","Symphyotrichum ericoides",0.00139482649874922
+"58","Symphyotrichum oblongifolium",0.000503045128981734
+"59","Symphyotrichum sericeum",0.000171689983325714
+"60","Astragalus crassicarpus",0.000409347358804096
+"61","Astragalus lotiflorus",0.000648849673278232
+"62","Astragalus plattensis",0.00011573511430645
+"63","Astragalus canadensis",0.000987310958605689
+"64","Baptisia australis",0.000391174628395593
+"65","Baptisia bracteata",0.000229413482927175
+"66","Arnoglossum plantagineum",0.000246734176030688
+"67","Callirhoe alcaeoides",0.00012215203324181
+"68","Callirhoe involucrata",0.00022598149080968
+"69","Cirsium undulatum",0.00062337141814984
+"70","Conyza canadensis",0.00686767597116412
+"71","Croton monanthogynus",0.000281387467628927
+"72","Delphinium carolinianum",0.000318788940939002
+"73","Descurainia pinnata",0.00143966044209564
+"74","Draba reptans",0.000701371636140585
+"75","Echinacea angustifolia",0.000267596055872321
+"76","Erigeron strigosus",0.00134462813463939
+"77","Euphorbia marginata",0.00116294594384998
+"78","Euphorbia spathulata",0.000890562847884487
+"79","Euphorbia glyptosperma",0.0010033399713479
+"80","Geranium carolinianum",0.00139230800401007
+"81","Hedeoma hispida",0.00059609459513017
+"82","Hieracium longipilum",0.000128029704548662
+"83","Hybanthus verticillatus",0.000295238744655182
+"84","Hymenopappus scabiosaeus",0.000231675367304921
+"85","Brickellia eupatorioides",0.000684405509446132
+"86","Lactuca serriola",0.00615248931198756
+"87","Lathyrus polymorphus",0.0107646329265431
+"88","Lepidium densiflorum",0.0020764966841907
+"89","Lespedeza capitata",0.000406454347225799
+"90","Liatris punctata",0.000441632388504971
+"91","Linum sulcatum",0.000416553903847927
+"92","Lithospermum incisum",0.000929149429777797
+"93","Lomatium foeniculaceum",0.000529499633822022
+"94","Nothocalais cuspidata",0.0002342303091402
+"95","Coryphantha missouriensis",8.39368409217761e-05
+"96","Oenothera macrocarpa",0.000379479917171472
+"97","Oenothera speciosa",0.000899986296874944
+"98","Oenothera biennis",0.00165965831917258
+"99","Opuntia macrorhiza",0.000448905127622306
+"100","Oxalis stricta",0.00157471168080224
+"101","Oxalis violacea",0.000390570100039443
+"102","Penstemon cobaea",9.49131614914579e-05
+"103","Penstemon grandiflorus",0.0017534860242426
+"104","Dalea candida",0.000647363266617539
+"105","Dalea multiflora",7.37544456043718e-05
+"106","Dalea purpurea",0.000714468305558747
+"107","Lactuca saligna",0.000911652397309178
+"108","Physalis pumila",0.000157643796512205
+"109","Physalis virginiana",0.000727610027183701
+"110","Crataegus mollis",0.000370707097480082
+"111","Plantago rhodosperma",0.000309530692150535
+"112","Polygala verticillata",0.00050297358288021
+"113","Pediomelum esculentum",0.000385086346119181
+"114","Pediomelum tenuiflorum",0.000365689752865461
+"115","Ratibida columnifera",0.000976711327646928
+"116","Rudbeckia hirta",0.000951554385406239
+"117","Ruellia humilis",0.00037748391440348
+"118","Salvia azurea",0.000503667411946821
+"119","Mimosa quadrivalvis",0.00192783631542616
+"120","Packera plattensis",0.000547284303515451
+"121","Silene antirrhina",0.00366548940636201
+"122","Sisyrinchium campestre",0.000139998879559301
+"123","Solanum carolinense",0.000468357276981691
+"124","Solidago altissima",0.00134591406658299
+"125","Solidago missouriensis",0.000812424321402834
+"126","Solidago mollis",0.00026007053942259
+"127","Solidago rigida",0.000836011348534956
+"128","Solidago speciosa",0.000434774775144034
+"129","Spermolepis inermis",0.000240522287697199
+"130","Tradescantia bracteata",0.000156231670728901
+"131","Tragia betonicifolia",0.000129906023143129
+"132","Tragopogon dubius",0.00131200360151847
+"133","Triodanis leptocarpa",0.000210587452208008
+"134","Triodanis perfoliata",0.00340693869096642
+"135","Glandularia bipinnatifida",0.000360508080752001
+"136","Verbena stricta",0.000479366766443693
+"137","Vernonia baldwinii",0.000183490931722978
+"138","Viola bicolor",0.00994164785581171
+"139","Galium aparine",0.0075873448158554
+"140","Lespedeza violacea",0.000258023157128859
+"141","Pediomelum argophyllum",0.000204112141994061
+"142","Desmodium illinoense",0.000100829398866592
+"143","Juncus interior",0.000721958583356123
+"144","Viola pedatifida",0.000419293584455371
+"145","Prunus americana",0.000776316735817406
+"146","Scutellaria parvula",0.00041716852206622
+"147","Agrostis hyemalis",0.00283694866695002
+"148","Kummerowia stipulacea",0.000252355364981486
+"149","Asclepias viridiflora",0.000816410582945357
+"150","Ageratina altissima",0.000401286916732773
+"151","Comandra umbellata",0.00121454235421828
+"152","Agalinis aspera",0.00013467202066556
+"153","Acalypha virginica",0.000345142378654494
+"154","Myosotis verna",0.000731921567295596
+"155","Ulmus americana",0.0008328632734395
+"156","Parietaria pensylvanica",0.00116937138401031
+"157","Ambrosia trifida",0.000811598557505155
+"158","Asclepias syriaca",0.000542895678823081
+"159","Taraxacum officinale",0.0100032552442938
+"160","Medicago lupulina",0.00800430107808152
+"161","Cornus drummondii",0.000273968072118541
+"162","Chenopodium album",0.00936792649774189
+"163","Dichanthelium linearifolium",0.000581775378193768
+"164","Digitaria cognata",0.000665235644653743
+"165","Capsella bursa-pastoris",0.0093896926690643
+"166","Strophostyles leiosperma",0.000598592958539526
+"167","Euphorbia corollata",0.00034221276978587
+"168","Oenothera curtiflora",0.0040926297312357
+"169","Toxicoscordion nuttallii",6.29890038103533e-05
+"170","Lithospermum occidentale",0.00031564044397017
+"171","Rumex crispus",0.0082875642122569
+"172","Bromus inermis",0.00213149552959639
+"173","Prunella vulgaris",0.00600031202389822
+"174","Teucrium canadense",0.00091935623100487
+"175","Equisetum laevigatum",0.00124170476582413
+"176","Lotus corniculatus",0.00233622924377656
+"177","Grindelia squarrosa",0.000863258332462861
+"178","Rumex altissimus",0.0005043088247591
+"179","Calystegia macounii",0.00044978241109858
+"180","Melilotus officinalis",0.00200191109857352
+"181","Verbascum blattaria",0.00100552261972322
+"182","Tripsacum dactyloides",0.000958871150500792
+"183","Setaria pumila",0.00195488542953615
+"184","Lycopus americanus",0.00117549035977861
+"185","Cynanchum laeve",0.000241900461336557
+"186","Euphorbia dentata",0.000947713458788331
+"187","Physalis heterophylla",0.000538868806227513
+"188","Digitaria sanguinalis",0.00438105334617871
+"189","Heliopsis helianthoides",0.000572051849557551
+"190","Carduus nutans",0.00429171801417103
+"191","Nepeta cataria",0.00142080148658801
+"192","Gleditsia triacanthos",0.00311298737783063
+"193","Celtis occidentalis",0.000637426208517503
+"194","Silphium integrifolium",0.000201411799906282
+"195","Mirabilis nyctaginea",0.00106429699366054
+"196","Cyperus odoratus",0.0038201059380771
+"197","Acalypha ostryifolia",0.000848010634942224
+"198","Polygonum ramosissimum",0.00153879819274943
+"199","Viola nephrophylla",0.00143561159509985
+"200","Solanum rostratum",0.00120881048249052
+"201","Setaria viridis",0.00566126728490705
+"202","Ambrosia artemisiifolia",0.00226743879392126
+"203","Amaranthus tuberculatus",0.000818854908774763
+"204","Amaranthus retroflexus",0.0048693979150239
+"205","Cucurbita foetidissima",0.000387740087348716
+"206","Amaranthus blitoides",0.00120654875302459
+"207","Euphorbia serpens",0.00631256217578597
+"208","Helianthus annuus",0.00235874181763682
+"209","Tridens flavus",0.000419014596904354
+"210","Parthenocissus quinquefolia",0.00101607040367501
+"211","Fallopia scandens",0.00070151019856134
+"212","Sporobolus vaginiflorus",0.000781324461303286
+"213","Rosa blanda",0.000540054643059652
+"214","Stenaria nigricans",0.000552888099622674
+"215","Glandularia canadensis",0.000165267924039326
+"216","Mentzelia oligosperma",0.00020883543928827
+"217","Euphorbia stictospora",0.000513978018306494
+"218","Vicia americana",0.0013834227885201
+"219","Mirabilis albida",0.000997488552611849
+"220","Hopia obtusa",0.000289961473228953
+"221","Sambucus canadensis",0.00128277168805192
+"222","Toxicodendron radicans",0.00099244177674443
+"223","Menispermum canadense",0.000410444999349348
+"224","Plantago virginica",0.000855834561600174
+"225","Rhus glabra",0.00101000682011813
+"226","Rorippa sinuata",0.000597191610764404
+"227","Hordeum jubatum",0.00303004545974559
+"228","Carex brachyglossa",5.89364689810443e-05
+"229","Juncus dudleyi",0.00170951049694572
+"230","Amorpha fruticosa",0.000975746530426541
+"231","Morus rubra",0.000486220838206298
+"232","Juncus torreyi",0.000926976789711459
+"233","Scirpus atrovirens",0.00050748382478108
+"234","Chenopodium berlandieri",0.00186934078246103
+"235","Lythrum alatum",0.000719729307922672
+"236","Euphorbia spp.",0.009140801378586
+"237","Mirabilis linearis",0.000431902352637533
+"238","Polanisia dodecandra",0.00104227909222821
+"239","Monarda fistulosa",0.0010961575460598
+"240","Trichostema brachiatum",0.000476365612635747
+"241","Acalypha monococca",7.15534154465122e-05
+"242","Proboscidea louisianica",0.000812002588347406
+"243","Monarda citriodora",0.000635604973697434
+"244","Zizia aurea",0.000487933826994871
+"245","Torilis arvensis",0.000824949908889045
+"246","Rhus aromatica",0.00114489822611467
+"247","Arisaema dracontium",0.000432789085252501
+"248","Asclepias sullivantii",0.000145501079138979
+"249","Krigia cespitosa",0.000272778485041873
+"250","Sonchus asper",0.00787465930046408
+"251","Xanthium strumarium",0.00740525067270603
+"252","Symphyotrichum lanceolatum",0.0016240366544346
+"253","Helianthus petiolaris",0.00264095778859784
+"254","Dyssodia papposa",0.00104418165766519
+"255","Lactuca canadensis",0.00152705098171375
+"256","Conyza ramosissima",0.000226899800005164
+"257","Silphium laciniatum",0.000261030683243523
+"258","Cynoglossum officinale",0.000828508949546889
+"259","Hackelia virginiana",0.000312577447542845
+"260","Rorippa nasturtium-aquaticum",0.00180363586528191
+"261","Erysimum repandum",0.0029677781697289
+"262","Rorippa palustris",0.00458654285217298
+"263","Lobelia cardinalis",0.00152411817583724
+"264","Campanula americana",8.56440338030134e-05
+"265","Cannabis sativa",0.00781306130503539
+"266","Triosteum perfoliatum",0.000281513566641951
+"267","Silene stellata",0.000246569164872799
+"268","Euonymus atropurpureus",0.000299677234414811
+"269","Chenopodium simplex",0.000798098214212461
+"270","Chenopodium pallescens",0.000141242456589815
+"271","Kochia scoparia",0.00118157750082382
+"272","Commelina erecta",0.00352121925418243
+"273","Convolvulus arvensis",0.00448715684721411
+"274","Penthorum sedoides",0.000498801547040464
+"275","Juniperus virginiana",0.00050718546501944
+"276","Alopecurus carolinianus",0.000745056982541947
+"277","Carex hystericina",0.00115278353806954
+"278","Schoenoplectus tabernaemontani",0.0029331665508655
+"279","Scirpus pendulus",0.000830613241385533
+"280","Cyperus acuminatus",0.000988778145913085
+"281","Euphorbia prostrata",0.00563429803651926
+"282","Euphorbia nutans",0.0016064614223459
+"283","Euphorbia missurica",0.000247373464028003
+"284","Euphorbia cyathophora",0.00330759639472827
+"285","Croton capitatus",0.000481106281320886
+"286","Quercus muehlenbergii",0.000435447112955163
+"287","Quercus macrocarpa",0.000719165359749882
+"288","Hypericum perforatum",0.00582580224685524
+"289","Aesculus glabra",0.000405992980498449
+"290","Sisyrinchium angustifolium",0.00183067688062304
+"291","Carya cordiformis",0.000455073979379032
+"292","Juglans nigra",0.000687563871604189
+"293","Agastache nepetoides",0.00024345399548221
+"294","Mentha canadensis",0.00194772867274254
+"295","Salvia reflexa",0.000909045455475453
+"296","Stachys palustris",0.00133016656812344
+"297","Leonurus cardiaca",0.000981277565679883
+"298","Yucca glauca",0.000267988601264585
+"299","Gymnocladus dioicus",0.000345349198973792
+"300","Crotalaria sagittalis",0.00206525035270304
+"301","Glycyrrhiza lepidota",0.000605936329351511
+"302","Desmodium glutinosum",0.000576905462142909
+"303","Desmanthus illinoensis",0.000380030719053322
+"304","Senna marilandica",0.000306166697429374
+"305","Chamaecrista fasciculata",0.000595133766652963
+"306","Cercis canadensis",0.000490028267720249
+"307","Abutilon theophrasti",0.00177290663604193
+"308","Hibiscus trionum",0.00108218038868168
+"309","Malvastrum angustum",1.78228175683291e-05
+"310","Morus alba",0.00249515113730791
+"311","Fraxinus pennsylvanica",0.0010112825140039
+"312","Oenothera serrulata",0.000439204535379159
+"313","Oenothera villosa",0.000843250371684493
+"314","Spiranthes vernalis",0.000341254909993342
+"315","Polygonum tenue",0.000320042222827612
+"316","Phryma leptostachya",0.00043574641532508
+"317","Phytolacca americana",0.00180483220504452
+"318","Plantago rugelii",0.00043942470069098
+"319","Plantago aristata",0.00040306601503059
+"320","Plantago patagonica",0.00299992181189277
+"321","Platanus occidentalis",0.000490717357604042
+"322","Muhlenbergia racemosa",0.00089120473497246
+"323","Muhlenbergia frondosa",0.000400807013755812
+"324","Aristida purpurea",0.000695932397677124
+"325","Cenchrus longispinus",0.00108091321179317
+"326","Erythranthe geyeri",0.00218862224635501
+"327","Leucospora multifida",0.000485077297757769
+"328","Bacopa rotundifolia",0.00303201708977723
+"329","Ribes missouriense",0.000164960466339243
+"330","Salix exigua",0.00144190455569371
+"331","Salix nigra",0.000934934500947747
+"332","Salix amygdaloides",0.0008161136560982
+"333","Populus deltoides",0.00108484245935719
+"334","Zanthoxylum americanum",0.000322883551845024
+"335","Galium circaezans",0.000340831884237583
+"336","Geum canadense",0.000480963225196042
+"337","Fragaria virginiana",0.00214341666155476
+"338","Prunus angustifolia",0.000333256181776982
+"339","Prunus pumila",0.00052537508268688
+"340","Rubus pensilvanicus",0.00103706746565451
+"341","Smilax tamnoides",0.000401660723231751
+"342","Clematis pitcheri",0.000299210137442111
+"343","Thalictrum dasycarpum",0.000849412936761204
+"344","Argyrochosma dealbata",5.3740995144936e-05
+"345","Pellaea glabella",0.000808901609225572
+"346","Woodsia obtusa",0.000352840920225558
+"347","Polygonum achoreum",0.00108965136701979
+"348","Persicaria lapathifolia",0.00559297276780489
+"349","Persicaria pensylvanica",0.00182592260159383
+"350","Persicaria maculosa",0.00615973254653021
+"351","Persicaria punctata",0.00442096893924298
+"352","Hesperostipa spartea",0.000696294923740314
+"353","Sitanion hystrix",0.00042186244074607
+"354","Glyceria striata",0.00216633354209943
+"355","Leersia oryzoides",0.00117622761600471
+"356","Elymus villosus",0.000398824964358609
+"357","Paspalum setaceum",0.000976487272550902
+"358","Echinochloa crus-galli",0.00777094011344706
+"359","Verbena bracteata",0.00100948102713058
+"360","Verbena urticifolia",0.000504755732694875
+"361","Tilia americana",0.000590967588160186
+"362","Typha latifolia",0.00656629411783003
+"363","Solanum ptycanthum",0.000424671139709931
+"364","Physalis pubescens",0.00413892914281984
+"365","Veronica anagallis-aquatica",0.00398706963092472
+"366","Verbascum thapsus",0.00415691328316438
+"367","Scrophularia lanceolata",0.000749310297260498
+"368","Liatris aspera",0.000311353545989665
+"369","Tribulus terrestris",0.00584965722794807
+"370","Vitis riparia",0.000568583667104572
+"371","Botrychium virginianum",0.0030851975496621
+"372","Ruellia strepens",0.000207762145619946
+"373","Acer negundo",0.00202963363396733
+"374","Asimina triloba",0.000313002373217703
+"375","Chaerophyllum procumbens",0.000251816536535699
+"376","Sanicula canadensis",0.000427427533299889
+"377","Arctium minus",0.00543538360867496
+"378","Symphyotrichum drummondii",0.000214733238438321
+"379","Symphyotrichum laeve",0.00112851473045346
+"380","Symphyotrichum subulatum",0.00360884808902924
+"381","Bidens bipinnata",0.00256135137609929
+"382","Bidens cernua",0.00164657404363132
+"383","Bidens frondosa",0.0012802410501818
+"384","Bidens polylepis",0.000273880960761674
+"385","Heterotheca canescens",0.000102796063862011
+"386","Cirsium altissimum",0.000334323369860251
+"387","Cirsium vulgare",0.00725475716264211
+"388","Erigeron philadelphicus",0.00154791449703743
+"389","Eupatorium altissimum",0.000299307360133415
+"390","Helianthus tuberosus",0.0042711937742455
+"391","Liatris mucronata",3.44051660970265e-05
+"392","Verbesina alternifolia",0.000292452912340454
+"393","Ostrya virginiana",0.00111527432903707
+"394","Buglossoides arvensis",0.00168023608434621
+"395","Lithospermum canescens",0.00036523092323642
+"396","Alliaria petiolata",0.000986007588857086
+"397","Camelina microcarpa",0.00107313433962839
+"398","Cardamine concatenata",0.000287347552752687
+"399","Draba cuneifolia",0.000385934897372686
+"400","Hesperis matronalis",0.000154168056910897
+"401","Thlaspi arvense",0.00217720503212801
+"402","Lobelia siphilitica",0.000366440478202999
+"403","Dianthus armeria",0.00101694357336772
+"404","Celastrus scandens",0.000546743155399274
+"405","Chenopodium standleyanum",0.000330593660859026
+"406","Monolepis nuttalliana",0.000807165601129709
+"407","Evolvulus nuttallianus",0.000403793852097452
+"408","Ipomoea hederacea",0.00112046758518293
+"409","Sicyos angulatus",0.000417787682280291
+"410","Cuscuta glomerata",0.000157525387497948
+"411","Astragalus missouriensis",0.000305156361952779
+"412","Desmodium paniculatum",0.000412483394617518
+"413","Desmodium sessilifolium",0.00022117693983966
+"414","Corydalis micrantha",0.000297835739363004
+"415","Dicentra cucullaria",0.000685140302030415
+"416","Ellisia nyctelea",0.000494868544727637
+"417","Ammannia coccinea",0.00148987980821173
+"418","Sida spinosa",0.00549278168603814
+"419","Maclura pomifera",0.00488165680846923
+"420","Oenothera glaucifolia",7.68801366893424e-05
+"421","Phlox divaricata",0.0002945884120445
+"422","Persicaria amphibia",0.00269563958099235
+"423","Portulaca oleracea",0.00720490218271358
+"424","Lysimachia ciliata",0.00116642872215341
+"425","Ranunculus abortivus",0.00114360245499045
+"426","Prunus virginiana",0.00164022140129108
 "427",NA,NA
-"428",NA,NA
-"429",NA,NA
-"430",NA,NA
-"431",NA,NA
-"432",NA,NA
-"433",NA,NA
-"434",NA,NA
-"435",NA,NA
-"436",NA,NA
-"437",NA,NA
-"438",NA,NA
-"439",NA,NA
-"440",NA,NA
-"441",NA,NA
-"442",NA,NA
-"443",NA,NA
-"444",NA,NA
-"445",NA,NA
-"446",NA,NA
-"447",NA,NA
-"448",NA,NA
-"449",NA,NA
-"450",NA,NA
-"451",NA,NA
-"452",NA,NA
-"453",NA,NA
-"454",NA,NA
-"455",NA,NA
-"456",NA,NA
-"457",NA,NA
-"458",NA,NA
-"459",NA,NA
-"460",NA,NA
-"461",NA,NA
-"462",NA,NA
-"463",NA,NA
-"464",NA,NA
-"465",NA,NA
-"466",NA,NA
-"467",NA,NA
-"468",NA,NA
-"469",NA,NA
-"470",NA,NA
-"471",NA,NA
-"472",NA,NA
-"473",NA,NA
-"474",NA,NA
-"475",NA,NA
-"476",NA,NA
-"477",NA,NA
-"478",NA,NA
-"479",NA,NA
-"480",NA,NA
-"481",NA,NA
-"482",NA,NA
-"483",NA,NA
-"484",NA,NA
-"485",NA,NA
-"486",NA,NA
-"487",NA,NA
-"488",NA,NA
-"489",NA,NA
-"490",NA,NA
-"491",NA,NA
-"492",NA,NA
-"493",NA,NA
-"494",NA,NA
-"495",NA,NA
-"496",NA,NA
-"497",NA,NA
-"498",NA,NA
-"499",NA,NA
-"500",NA,NA
-"501",NA,NA
-"502",NA,NA
-"503",NA,NA
-"504",NA,NA
-"505",NA,NA
-"506",NA,NA
-"507",NA,NA
-"508",NA,NA
-"509",NA,NA
-"510",NA,NA
-"511",NA,NA
-"512",NA,NA
-"513",NA,NA
-"514",NA,NA
-"515",NA,NA
+"428","Agalinis densiflora",1.63645984699597e-05
+"429","Veronica peregrina",0.0073141592690048
+"430","Urtica dioica",0.00701297580304289
+"431","Phyla lanceolata",0.000656487060004455
+"432","Verbena hastata",0.000822396048617933
+"433","Alisma subcordatum",0.000604354444242944
+"434","Sagittaria latifolia",0.00244881160786622
+"435","Tradescantia ohiensis",0.000454785889385608
+"436","Allium stellatum",0.000357466304003749
+"437","Asparagus officinalis",0.00497653649327311
+"438","Erythronium albidum",0.000246005723207762
+"439","Najas guadalupensis",0.00420729595118736
+"440","Agrostis stolonifera",0.00969623871796912
+"441","Bothriochloa bladhii",0.002335145718897
+"442","Eriochloa contracta",0.000705561332311164
+"443","Phleum pratense",0.00372598315092232
+"444","Potamogeton foliosus",0.00283886203143716
+"445","Potamogeton nodosus",0.00177648674614815
+"446","Potamogeton pusillus",0.00669864273061308
+"447","Veronica agrestis",0.00202427428578828
+"448","Strophostyles helvola",0.00045945903599454
+"449","Lactuca ludoviciana",0.000772626559380146
+"450","Triticum aestivum",0.00773172182668753
+"451","Gaillardia pulchella",0.00152929778576755
+"452","Erigeron annuus",0.00201582093493747
+"453","Trifolium repens",0.0091645885161903
+"454","Helianthus pauciflorus",0.000951905326200954
+"455","Ophioglossum vulgatum",0.000299898776123898
+"456","Poa compressa",0.00220083751051656
+"457","Potentilla simplex",0.000470609526865911
+"458","Chaerophyllum tainturieri",0.000280864661017366
+"459","Desmodium canescens",0.000334958603789662
+"460","Chrysanthemum leucanthemum",0.00369879303490706
+"461","Rubus occidentalis",0.000358781893291122
+"462","Scrophularia marilandica",0.000307750436644822
+"463","Lamium amplexicaule",0.0053633509335899
+"464","Ulmus rubra",0.00041812492099081
+"465","Robinia pseudo-acacia",0.00175924578089828
+"466","Bothriochloa ischaemum",0.000661740664628838
+"467","Helianthus maximilianii",0.000925779249595548
+"468","Asclepias lanuginosa",0.000221927565316775
+"469","Securigera varia",0.00157274731871785
+"470","Erechtites hieraciifolia",0.00395495162874173
+"471","Carex austrina",0.000309308175778604
+"472","Pseudognaphalium obtusifolium",0.000532754282101839
+"473","Amphiachyris dracunculoides",0.000169451440633284
+"474","Symphyotrichum pilosum",0.000361867069845788
+"475","Euphorbia maculata",0.00151540332594806
+"476","Veronica arvensis",0.00744486731089037
+"477","Arenaria serpyllifolia",0.00137831474890832
+"478","Euphorbia davidii",0.00434062743867662
+"479","Solidago gigantea",0.00122500575883478
+"480","Cuscuta indecora",0.00340833026076527
+"481","Eragrostis cilianensis",0.00624078736597248
+"482","Cuscuta coryli",0.00024111174470698
+"483","Polygonum aviculare",0.00845079883680959
+"484","Physalis missouriensis",1.75194853821206e-05
+"485","Solidago canadensis",0.0020870413277826
+"486","Oxalis dillenii",0.00112751263986287
+"487","Taraxacum erythrospermum",0.00159667361392707
+"488","Pyrus calleryana",0.000365174161694767
+"489","Solidago petiolaris",0.00032533756507718
+"490","Physalis longifolia",0.00083402366127642
+"491","Lepidium virginicum",0.00645989321759312
+"492","Draba brachycarpa",9.65688419928717e-05
+"493","Lonicera maackii",0.000325191416081756
+"494","Carex bicknellii",0.000339212736642343
+"495","Tragia ramosa",0.000330928816861342
+"496","Ampelopsis cordata",0.00042427625684128
+"497","Lespedeza x manniana",1.59772481977452e-05
+"498","Desmodium perplexum",0.000293715408115466
+"499","Viola missouriensis",0.000237070359319879
+"500","Carex grisea",0.000359646008904594
+"501","Lespedeza cuneata",0.000340283974515745
+"502","Asclepias asperula",0.000281418659759185
+"503","Setaria faberi",0.000889631651343683
+"504","Dichanthelium wilcoxianum",0.000138186304935494
+"505","Ulmus pumila",0.00124675756381099
+"506","Vitis vulpina",0.000443263069805392
+"507","Persicaria hydropiperoides",0.00454729747974389
+"508","Carex oligocarpa",0.000278588126827585
+"509","Viola sororia",0.000925904810810255
+"510","Rubus flagellaris",0.000710685192563397
+"511","Leersia virginica",0.00046503538807829
+"512","Persicaria virginiana",0.00039608527047913
+"513","Dichanthelium leibergii",0.000207355238713149
+"514","Malus baccata",0.000777286625917157
+"515","Cyperus squarrosus",0.00405706433492873
